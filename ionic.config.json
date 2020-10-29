@@ -1,0 +1,7 @@
+{
+  "name": "CapacitorSYZJ",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
