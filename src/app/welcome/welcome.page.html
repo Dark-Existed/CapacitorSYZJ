@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button color="primary" [hidden]="!showSkip">跳过</ion-button>
+      <ion-button color="primary" [hidden]="!showSkip" (click)="onSkip()">跳过</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -23,7 +23,7 @@
               <ion-button color="primary" fill="outline" expand="block">登录</ion-button>
             </ion-col>
             <ion-col>
-              <ion-button color="primary" expand="block">注册</ion-button>
+              <ion-button color="primary" fill="outline" expand="block" href="/passport/signup">注册</ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>

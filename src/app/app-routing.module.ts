@@ -17,6 +17,10 @@ const routes: Routes = [
     loadChildren: () => import('./welcome/welcome.module').then(m => m.WelcomePageModule),
     canActivate: [StartAppGuard]
   },
+  {
+    path: 'passport',
+    loadChildren: () => import('./passport/passport.module').then(m => m.PassportModule),
+  }
 ];
 
 @NgModule({

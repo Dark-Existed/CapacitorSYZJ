@@ -19,18 +19,27 @@ export class WelcomePage implements OnInit {
 
   ngOnInit() {
     const appConfig: any = this.localStorageService.get('App', { isLaunched: false, version: '1.0.0' });
+
     if (appConfig.isLaunched === false) {
       appConfig.isLaunched = true;
       this.localStorageService.set('App', appConfig);
     } else {
       this.router.navigateByUrl('home');
     }
+
   }
 
   onSlideWillChange(event) {
     event.target.isEnd().then((end) => {
       this.showSkip = !end;
     });
+  }
+
+  onSkip() {
+    this.router.navigateByUrl('/passport/signup');
+  }
+  onLogin() {
+    this.router.navigateByUrl('/passport/login');
   }
 
 }
