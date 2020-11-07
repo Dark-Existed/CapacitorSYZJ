@@ -9,7 +9,7 @@
     <img class="logo" src="assets/img/logo.png" alt="">
   </div>
 
-  <ion-grid fixed>
+  <ion-grid fixed style="width: 100%; padding: 0px 16px;">
     <ion-row>
       <ion-col size="2">
         <img src="assets/img/registered_one.png" alt="" *ngIf="slideIndex!==0">
@@ -42,7 +42,7 @@
   <ion-slides #signupSlides (ionSlideDidChange)="onSlideDidChange()">
 
     <ion-slide>
-      <form (ngSubmit)="onSubmitPhone(phoneForm)" #phoneForm="ngForm"  class="normal">
+      <form (ngSubmit)="onSubmitPhone(phoneForm)" #phoneForm="ngForm" class="normal">
         <ion-list>
           <div style="display: flex; align-items: center;">
             <ion-label slot="start" position="fixed">手机号码</ion-label>
@@ -131,6 +131,19 @@
           <div class="padding-horizontal">
             <ion-button type="submit" expand="full" color="primary" [disabled]="accountForm.invalid">下一步</ion-button>
           </div>
+        </ion-list>
+      </form>
+    </ion-slide>
+
+    <ion-slide>
+      <form class="normal">
+        <ion-list>
+          <ion-text>
+            <p>注册成功</p>
+          </ion-text>
+          <div class="padding-horizontal">
+            <ion-button expand="full" color="success" (click)="onLogin($event)">点击登录</ion-button>
+        </div>
         </ion-list>
       </form>
     </ion-slide>

@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertController, IonSlides, MenuController } from '@ionic/angular';
 import { AuthenticationCodeService } from '../authentication-code.service';
 import { Signup } from './signup';
@@ -14,14 +15,16 @@ export class SignupPage implements AfterViewInit {
   constructor(
     private authentication: AuthenticationCodeService,
     private alertController: AlertController,
+    private router: Router,
     private menuController: MenuController,
-  ) {}
+  ) { }
 
   @ViewChild('signupSlides') signupSlides: IonSlides;
 
   submited = false;
   codeValid = false;
   code: string;
+
   slideIndex = 0;
 
   emailFlag = true;
@@ -56,6 +59,7 @@ export class SignupPage implements AfterViewInit {
 
   ngAfterViewInit() {
     this.signupSlides.lockSwipeToNext(true);
+    this.signupSlides.lockSwipeToPrev(true);
   }
 
   onSlideDidChange() {
@@ -71,9 +75,9 @@ export class SignupPage implements AfterViewInit {
   }
 
   onPrevious() {
-    this.signupSlides.lockSwipeToNext(false);
+    this.signupSlides.lockSwipeToPrev(false);
     this.signupSlides.slidePrev();
-    this.signupSlides.lockSwipeToNext(true);
+    this.signupSlides.lockSwipeToPrev(true);
   }
 
   getMessage() {
@@ -122,10 +126,10 @@ export class SignupPage implements AfterViewInit {
   }
 
   validShopname() {
-    if (this.signup.shopName.length <= 0 || this.signup.shopName.length > 12) {
-      this.shopNameFlag = false;
-    } else {
+    if (this.signup.shopName.length >= 0 && this.signup.shopName.length < 12) {
       this.shopNameFlag = true;
+    } else {
+      this.shopNameFlag = false;
     }
   }
 
@@ -134,17 +138,22 @@ export class SignupPage implements AfterViewInit {
     if (this.signup.password.length < 6 || this.signup.password.length > 16 || !reg.test(this.signup.password)) {
       this.passwordFlag = false;
     } else {
-        this.passwordFlag = true;
+      this.passwordFlag = true;
     }
   }
 
   validConfirmPassword() {
-    if (this.signup.confirmPassword !== this.signup.password) {
-      this.confirmPasswordFlag = false;
-    } else {
-      this.confirmPasswordFlag = true;
-    }
+    this.confirmPasswordFlag = (this.signup.confirmPassword === this.signup.password);
   }
+
+  async onSubmitAccount(accountForm: NgForm) {
+    this.onNext();
+  }
+
+  onLogin(event) {
+    this.router.navigateByUrl('/passport/login');
+  }
+
 
   ionViewWillEnter() {
     this.menuController.enable(false);
