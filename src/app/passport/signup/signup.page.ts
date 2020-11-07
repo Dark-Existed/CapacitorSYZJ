@@ -58,28 +58,27 @@ export class SignupPage implements AfterViewInit {
     this.signupSlides.lockSwipeToNext(true);
   }
 
+  onSlideDidChange() {
+    this.signupSlides.getActiveIndex().then((n) => {
+      this.slideIndex = n;
+    });
+  }
+
   onNext() {
     this.signupSlides.lockSwipeToNext(false);
     this.signupSlides.slideNext();
     this.signupSlides.lockSwipeToNext(true);
-    this.signupSlides.getActiveIndex().then((n) => {
-      this.slideIndex = n;
-    });
   }
 
   onPrevious() {
     this.signupSlides.lockSwipeToNext(false);
     this.signupSlides.slidePrev();
     this.signupSlides.lockSwipeToNext(true);
-    this.signupSlides.getActiveIndex().then((n) => {
-      this.slideIndex = n;
-    });
   }
 
   getMessage() {
     this.authentication.getMessage();
   }
-
 
 
   // TODO 待完成

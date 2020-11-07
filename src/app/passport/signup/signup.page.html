@@ -39,10 +39,10 @@
     </ion-row>
   </ion-grid>
 
-  <ion-slides #signupSlides>
+  <ion-slides #signupSlides (ionSlideDidChange)="onSlideDidChange()">
 
     <ion-slide>
-      <form (ngSubmit)="onSubmitPhone(phoneForm)" #phoneForm="ngForm">
+      <form (ngSubmit)="onSubmitPhone(phoneForm)" #phoneForm="ngForm"  class="normal">
         <ion-list>
           <div style="display: flex; align-items: center;">
             <ion-label slot="start" position="fixed">手机号码</ion-label>
@@ -64,14 +64,16 @@
     </ion-slide>
 
     <ion-slide>
-      <form class="full-width" (ngSubmit)="onValidateCode(codeForm)" #codeForm="ngForm">
+      <form (ngSubmit)="onValidateCode(codeForm)" #codeForm="ngForm" class="normal">
         <ion-list>
-          <ion-item>
-            <ion-input name="code" type="number" placeholder="输入验证码" [(ngModel)]="signup.code" #code="ngModel">
-            </ion-input>
+          <div style="display: flex; align-items: center;">
+            <ion-item style="flex: 1;">
+              <ion-input name="code" type="number" placeholder="输入验证码" [(ngModel)]="signup.code" #code="ngModel">
+              </ion-input>
+            </ion-item>
             <ion-button color="primary" slot="end" (click)="onSendSMS()" [disabled]="codemessage.flag">
               {{codemessage.content}}</ion-button>
-          </ion-item>
+          </div>
           <div class="padding-horizontal">
             <ion-button expand="full" color="primary" [disabled]="codeForm.invalid" (click)="onPrevious()">上一步
             </ion-button>
@@ -84,7 +86,7 @@
     </ion-slide>
 
     <ion-slide>
-      <form class="full-width" (ngSubmit)="onSubmitAccount(accountForm)" #accountForm="ngForm">
+      <form (ngSubmit)="onSubmitAccount(accountForm)" #accountForm="ngForm" class="normal">
         <ion-list>
           <ion-item>
             <ion-label slot="start" position="fixed">电子邮箱</ion-label>
