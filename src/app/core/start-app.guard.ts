@@ -19,7 +19,7 @@ export class StartAppGuard implements CanActivate {
       this.localStorageService.set(APP_KEY, appConfig);
       return true;
     } else {
-      this.router.navigateByUrl('folder/Inbox');
+      this.router.navigateByUrl('tabs');
       return false;
     }
   }
