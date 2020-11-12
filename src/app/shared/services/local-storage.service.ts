@@ -7,7 +7,7 @@ export class LocalStorageService {
   private storage = window.localStorage;
   constructor() { }
 
-  get(key: string, defaultValue: any) {
+  get(key: string, defaultValue: any): any {
     let value = this.storage.getItem(key);
     try {
       value = JSON.parse(value);

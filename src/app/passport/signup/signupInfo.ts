@@ -1,4 +1,4 @@
-export interface Signup {
+export interface SignupInfo {
   phone: string;
   email: string;
   shopName: string;

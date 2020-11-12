@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, IonSlides, MenuController } from '@ionic/angular';
 import { AuthenticationCodeService } from '../authentication-code.service';
-import { Signup } from './signup';
+import { SignupInfo } from './signupInfo';
 
 @Component({
   selector: 'app-signup',
@@ -32,7 +32,7 @@ export class SignupPage implements AfterViewInit {
   passwordFlag = true;
   confirmPasswordFlag = true;
 
-  signup: Signup = {
+  signup: SignupInfo = {
     phone: '',
     email: '',
     shopName: '',

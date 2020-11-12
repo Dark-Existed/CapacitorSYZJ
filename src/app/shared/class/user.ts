@@ -1,15 +1,10 @@
 export class User {
     id: number;
+    shopId: number;
+    userName: string;
     phone: string;
     email: string;
-    shopName: string;
+    passwordToken: string;
+    wechatId: string;
     createTime: string;
-
-    constructor() {
-        this.id = 1;
-        this.phone = '';
-        this.email = '';
-        this.shopName = '';
-        this.createTime = '';
-    }
 }
