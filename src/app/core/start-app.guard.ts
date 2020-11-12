@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { APP_KEY } from '../routes/guide/guide.page';
 import { LocalStorageService } from '../shared/services/local-storage.service';
-import { APP_KEY } from '../welcome/welcome.page';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +23,5 @@ export class StartAppGuard implements CanActivate {
       return false;
     }
   }
-  
+
 }

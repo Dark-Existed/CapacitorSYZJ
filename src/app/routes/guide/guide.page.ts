@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
-import { LocalStorageService } from '../shared/services/local-storage.service';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 export const APP_KEY = 'App';
 
 @Component({
-  selector: 'app-welcome',
-  templateUrl: './welcome.page.html',
-  styleUrls: ['./welcome.page.scss'],
+  selector: 'app-guide',
+  templateUrl: './guide.page.html',
+  styleUrls: ['./guide.page.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class WelcomePage implements OnInit {
+export class GuidePage implements OnInit {
 
   showSkip = true;
 
