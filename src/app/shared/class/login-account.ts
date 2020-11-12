@@ -1,7 +1,6 @@
 export class LoginAccount {
     id: number;
-    type: string;
-    name: string;
+    type: number;
     loginTime: string;
 
     loginType = (type: number): string => {

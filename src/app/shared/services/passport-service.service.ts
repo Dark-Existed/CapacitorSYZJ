@@ -46,15 +46,25 @@ export class PassportServiceService {
     return shop;
   }
 
-
-  confirmAccount(phoneOrEmail: string, password: string): boolean {
-    const loginAccount = this.localStorageService.get('LoginAccount', null);
-    if (loginAccount &&
-      (loginAccount.phone === phoneOrEmail || loginAccount.email === phoneOrEmail) &&
-      loginAccount.password === password) {
-      return true;
+  confirmAccount(loginIdentifier: string, password: string): number {
+    const users = this.localStorageService.get('Users', []);
+    for (const user of users) {
+      if (user.phone === loginIdentifier && user.passwordToken === password) {
+        return 0;
+      }
+      if (user.email === loginIdentifier && user.passwordToken === password) {
+        return 1;
+      }
     }
-    return false;
+    return -1;
+  }
+
+  login(user: User, loginType: number) {
+    const loginAccount = new LoginAccount();
+    loginAccount.id = user.id;
+    loginAccount.type = loginType;
+    loginAccount.loginTime = new Date().toString();
+    this.localStorageService.set('LoginAccount', loginAccount);
   }
 
   isRegistered(users, signupInfo: SignupInfo): boolean {
@@ -100,7 +110,6 @@ export class PassportServiceService {
       return new AjaxResult(true, null);
     }
   }
-
 
   getCurrentUser(id: number): User {
     const users = this.localStorageService.get('Users', []);
