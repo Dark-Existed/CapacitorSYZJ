@@ -3,12 +3,15 @@ ion-toolbar {
     --border-color: transparent;
 }
 
-app-welcome {
-    .fixed-bottom {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 10;
-    }
+.fixed-button {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.fixed-image {
+    position: absolute;
+    top: 0;
 }

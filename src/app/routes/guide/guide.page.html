@@ -1,33 +1,34 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button color="primary" [hidden]="!showSkip" (click)="onSkip()">跳过</ion-button>
+      <ion-button color="primary" [hidden]="!showSkip">跳过</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-slides #slides pager="true" (ionSlideWillChange)="onSlideWillChange($event)">
+  <ion-slides #slides style="height: 100%;" (ionSlideWillChange)="onSlideWillChange($event)">
     <ion-slide>
-      <img src="/assets/img/splsh_one.png" alt="">
+      <img class="fixed-image" src="/assets/img/splsh_one.png" alt="">
     </ion-slide>
+    
     <ion-slide>
-      <img src="./assets/img/splsh_two.png" alt="">
+      <img class="fixed-image" src="./assets/img/splsh_two.png" alt="">
     </ion-slide>
+
     <ion-slide>
-      <div style="display: flex; flex-direction: column;">
-        <img src="assets/img/splsh_three.png" alt="">
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-button color="primary" fill="outline" expand="block">登录</ion-button>
-            </ion-col>
-            <ion-col>
-              <ion-button color="primary" fill="outline" expand="block" href="/passport/signup">注册</ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
+      <img class="fixed-image" src="assets/img/splsh_three.png" alt="">
+      <ion-grid class="fixed-button">
+        <ion-row>
+          <ion-col>
+            <ion-button color="primary" fill="outline" expand="block">登录</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button color="primary" expand="block">注册</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-slide>
+  
   </ion-slides>
 </ion-content>
