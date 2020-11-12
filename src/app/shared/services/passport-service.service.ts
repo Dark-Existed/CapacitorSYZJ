@@ -24,8 +24,8 @@ export class PassportServiceService {
 
   initUser(signupInfo: SignupInfo): User {
     const user = new User();
-    user.phone = signupInfo.phone;
     user.userName = this.uuid();
+    user.phone = signupInfo.phone;
     user.passwordToken = signupInfo.password;
     user.email = signupInfo.email;
     user.createTime = new Date().toString();
@@ -42,6 +42,7 @@ export class PassportServiceService {
   initShop(signupInfo: SignupInfo): Shop {
     const shop = new Shop();
     shop.shopName = signupInfo.shopName;
+    shop.shopTel = signupInfo.phone;
     return shop;
   }
 
@@ -68,6 +69,10 @@ export class PassportServiceService {
   addUser(signupInfo: SignupInfo) {
     const users = this.localStorageService.get('Users', []);
     const user = this.initUser(signupInfo);
+
+    const shops = this.localStorageService.get('Shops', []);
+    const shop = this.initShop(signupInfo);
+
     if (users.length !== 0) {
       if (this.isRegistered(users, signupInfo)) {
         return new AjaxResult(false, null, {
@@ -76,14 +81,22 @@ export class PassportServiceService {
         });
       } else {
         user.id = users.length + 1;
+        shop.id = shops.length + 1;
+        user.shopId = shops.length + 1;
         users.add(user);
+        shops.add(shop);
         this.localStorageService.set('Users', users);
+        this.localStorageService.set('Shops', shops);
         return new AjaxResult(true, null);
       }
     } else {
       user.id = 1;
+      shop.id = shops.length + 1;
+      user.shopId = shops.length + 1;
       users.add(user);
+      shops.add(shop);
       this.localStorageService.set('Users', users);
+      this.localStorageService.set('Shops', shops);
       return new AjaxResult(true, null);
     }
   }
