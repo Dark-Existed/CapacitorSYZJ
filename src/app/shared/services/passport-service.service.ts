@@ -15,9 +15,17 @@ export class PassportServiceService {
     private localStorageService: LocalStorageService
   ) { }
 
+  uuid(): string {
+    const tempUrl = URL.createObjectURL(new Blob());
+    const uuid = tempUrl.toString();
+    URL.revokeObjectURL(tempUrl);
+    return uuid.substr(uuid.lastIndexOf('/') + 1);
+  }
+
   initUser(signupInfo: SignupInfo): User {
     const user = new User();
     user.phone = signupInfo.phone;
+    user.userName = this.uuid();
     user.passwordToken = signupInfo.password;
     user.email = signupInfo.email;
     user.createTime = new Date().toString();
