@@ -1,4 +1,4 @@
-export class SHOP {
+export class Shop {
     shopId: number;
     shopName: string;
     shortName: string;

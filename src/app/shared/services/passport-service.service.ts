@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { SignupInfo } from 'src/app/passport/signup/signupInfo';
 import { AjaxResult } from '../class/ajax-result';
 import { LoginAccount } from '../class/login-account';
+import { Shop } from '../class/shop';
 import { User } from '../class/user';
 import { LocalStorageService } from './local-storage.service';
 
@@ -14,21 +15,27 @@ export class PassportServiceService {
     private localStorageService: LocalStorageService
   ) { }
 
-  initUser(signup: SignupInfo): User {
+  initUser(signupInfo: SignupInfo): User {
     const user = new User();
-    user.email = signup.email;
-    user.phone = signup.phone;
-    // user.shopName = signup.shopName;
-    user.createTime = new Date().toDateString();
+    user.phone = signupInfo.phone;
+    user.passwordToken = signupInfo.password;
+    user.email = signupInfo.email;
+    user.createTime = new Date().toString();
     return user;
   }
 
-  // initLoginAccount(sign: Signup): LoginAccount {
-  //   const loginAccount = new LoginAccount();
-  //   // loginAccount.identifier = sign.iden
-  //   loginAccount.passwordtoken = sign.password;
-  //   return loginAccount;
-  // }
+  initLoginAccount(user: User): LoginAccount {
+    const loginAccount = new LoginAccount();
+    loginAccount.id = user.id;
+
+    return loginAccount;
+  }
+
+  initShop(signupInfo: SignupInfo): Shop {
+    const shop = new Shop();
+    shop.shopName = signupInfo.shopName;
+    return shop;
+  }
 
 
   confirmAccount(phoneOrEmail: string, password: string): boolean {
@@ -41,29 +48,49 @@ export class PassportServiceService {
     return false;
   }
 
-  isRegistered(localUsers, signup: SignupInfo): boolean {
-    for (const user of localUsers) {
-      if (signup.phone === user.phone || signup.email === user.email) {
+  isRegistered(users, signupInfo: SignupInfo): boolean {
+    for (const user of users) {
+      if (signupInfo.phone === user.phone || signupInfo.email === user.email) {
         return true;
       }
     }
     return false;
   }
 
-  addUser(signup: SignupInfo) {
-    const localUsers = this.localStorageService.get('Users', []);
-    const user = this.initUser(signup);
-    if (localUsers.length !== 0) {
-      if (this.isRegistered(localUsers, signup)) {
+  addUser(signupInfo: SignupInfo) {
+    const users = this.localStorageService.get('Users', []);
+    const user = this.initUser(signupInfo);
+    if (users.length !== 0) {
+      if (this.isRegistered(users, signupInfo)) {
         return new AjaxResult(false, null, {
           message: '你的手机号码或邮箱已经被注册',
-          details: ''
+          details: null
         });
+      } else {
+        user.id = users.length + 1;
+        users.add(user);
+        this.localStorageService.set('Users', users);
+        return new AjaxResult(true, null);
       }
     } else {
-      this.localStorageService.set('Users', user);
-      // this.localStorageService.set('LoginAccount', loginAccount);
+      user.id = 1;
+      users.add(user);
+      this.localStorageService.set('Users', users);
+      return new AjaxResult(true, null);
     }
   }
 
+
+  getCurrentUser(id: number): User {
+    const users = this.localStorageService.get('Users', []);
+    for (const user of users) {
+      if (user.id === id) {
+        return user;
+      }
+    }
+    return null;
+  }
+
+
 }
+

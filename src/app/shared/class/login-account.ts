@@ -2,7 +2,7 @@ export class LoginAccount {
     id: number;
     type: string;
     name: string;
-    wechatId: string;
+    loginTime: string;
 
     loginType = (type: number): string => {
         switch (type) {
