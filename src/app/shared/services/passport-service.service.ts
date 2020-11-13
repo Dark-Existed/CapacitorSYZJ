@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { SignupInfo } from 'src/app/passport/signup/signupInfo';
+import { SignupInfo } from 'src/app/routes/passport/signup/signupInfo';
+
 import { AjaxResult } from '../class/ajax-result';
 import { LoginAccount } from '../class/login-account';
 import { Shop } from '../class/shop';

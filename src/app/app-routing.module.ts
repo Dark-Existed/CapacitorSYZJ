@@ -19,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: 'passport',
-    loadChildren: () => import('./passport/passport.module').then(m => m.PassportModule),
+    loadChildren: () => import('./routes/passport/passport.module').then(m => m.PassportModule),
   }
 ];
 

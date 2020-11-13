@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { PassportRoutingModule } from './passport-routing.module';
 import { SignupPage } from './signup/signup.page';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+
 
 
 @NgModule({
