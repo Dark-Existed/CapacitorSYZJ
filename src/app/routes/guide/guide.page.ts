@@ -18,13 +18,17 @@ export class GuidePage implements OnInit {
   constructor(private localStorageService: LocalStorageService, private router: Router) { }
 
   ngOnInit() {
-    const appConfig: any = this.localStorageService.get('App', { isLaunched: false, version: '1.0.0' });
+    const appConfig: any = this.localStorageService.get('App', {
+      isLaunched: false,
+      version: '1.3.4',
+      phone: '13315168184'
+    });
 
     if (appConfig.isLaunched === false) {
       appConfig.isLaunched = true;
       this.localStorageService.set('App', appConfig);
     } else {
-      this.router.navigateByUrl('home');
+      this.router.navigateByUrl('tabs');
     }
 
   }
