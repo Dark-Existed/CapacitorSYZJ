@@ -13,7 +13,11 @@ export class StartAppGuard implements CanActivate {
   constructor(private localStorageService: LocalStorageService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const appConfig: any = this.localStorageService.get(APP_KEY, { isLaunched: false, version: '1.0.0' });
+    const appConfig: any = this.localStorageService.get('App', {
+      isLaunched: false,
+      version: '1.3.4',
+      phone: '13315168184'
+    });
     if (appConfig.isLaunched === false) {
       appConfig.isLaunched = true;
       this.localStorageService.set(APP_KEY, appConfig);
