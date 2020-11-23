@@ -5,8 +5,7 @@ import { SignupPage } from './signup/signup.page';
 const routes: Routes = [
   {
     path: 'signup',
-    // component: SignupPage
-    loadChildren: () => import('./signup/signup.module').then(m => m.SignupPageModule)
+    component: SignupPage
   },
   {
     path: 'login',
