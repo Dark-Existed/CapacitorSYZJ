@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, IonSlides, MenuController } from '@ionic/angular';
-import { AuthenticationCodeService } from '../authentication-code.service';
+import { AuthenticationCodeService } from '../shared/authentication-code.service';
 import { SignupInfo } from './signupInfo';
 
 @Component({
