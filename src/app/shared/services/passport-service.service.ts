@@ -5,7 +5,7 @@ import { AjaxResult } from '../class/ajax-result';
 import { LoginAccount } from '../class/login-account';
 import { Shop } from '../class/shop';
 import { User } from '../class/user';
-import { LocalStorageService } from './local-storage.service';
+import { LocalStorageService, SHOPS_KEY, USERS_KEY } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +48,7 @@ export class PassportServiceService {
   }
 
   confirmAccount(loginIdentifier: string, password: string): number {
-    const users = this.localStorageService.get('Users', []);
+    const users = this.localStorageService.get(USERS_KEY, []);
     for (const user of users) {
       if (user.phone === loginIdentifier && user.passwordToken === password) {
         return 0;
@@ -78,7 +78,7 @@ export class PassportServiceService {
   }
 
   isPhoneOrEmailAvailable(phoneOrEmail: string) {
-    const users = this.localStorageService.get('Users', []);
+    const users = this.localStorageService.get(USERS_KEY, []);
     for (const user of users) {
       if (phoneOrEmail === user.phone || phoneOrEmail === user.email) {
         return false;
@@ -88,10 +88,10 @@ export class PassportServiceService {
   }
 
   async addUser(signupInfo: SignupInfo) {
-    const users = this.localStorageService.get('Users', []);
+    const users = this.localStorageService.get(USERS_KEY, []);
     const user = this.initUser(signupInfo);
 
-    const shops = this.localStorageService.get('Shops', []);
+    const shops = this.localStorageService.get(SHOPS_KEY, []);
     const shop = this.initShop(signupInfo);
 
     if (users.length !== 0) {
@@ -106,8 +106,8 @@ export class PassportServiceService {
         user.shopId = shops.length + 1;
         users.push(user);
         shops.push(shop);
-        this.localStorageService.set('Users', users);
-        this.localStorageService.set('Shops', shops);
+        this.localStorageService.set(USERS_KEY, users);
+        this.localStorageService.set(SHOPS_KEY, shops);
         return new AjaxResult(true, null);
       }
     } else {
@@ -116,14 +116,14 @@ export class PassportServiceService {
       user.shopId = shops.length + 1;
       users.push(user);
       shops.push(shop);
-      this.localStorageService.set('Users', users);
-      this.localStorageService.set('Shops', shops);
+      this.localStorageService.set(USERS_KEY, users);
+      this.localStorageService.set(SHOPS_KEY, shops);
       return new AjaxResult(true, null);
     }
   }
 
   getCurrentUser(id: number): User {
-    const users = this.localStorageService.get('Users', []);
+    const users = this.localStorageService.get(USERS_KEY, []);
     for (const user of users) {
       if (user.id === id) {
         return user;
