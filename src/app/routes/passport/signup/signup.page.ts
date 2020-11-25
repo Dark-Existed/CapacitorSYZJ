@@ -56,12 +56,7 @@ export class SignupPage implements AfterViewInit {
     time: 60
   };
 
-  onSubmitPhone(form: NgForm) {
-    this.submited = true;
-    if (form.valid) {
-      this.onNext();
-    }
-  }
+
 
   ngAfterViewInit() {
     this.signupSlides.lockSwipeToNext(true);
@@ -90,6 +85,18 @@ export class SignupPage implements AfterViewInit {
     this.authentication.getMessage();
   }
 
+  async onSubmitPhone(form: NgForm) {
+    // this.submited = true;
+    if (form.valid) {
+      if (this.passportService.isPhoneOrEmailAvailable(this.signup.phone)) {
+        this.onNext();
+      } else {
+        const toast = await this.toastController.create({ duration: 3000 });
+        toast.message = '手机号已被注册';
+        toast.present();
+      }
+    }
+  }
 
   // TODO 待完成
   async onSendSMS() {
@@ -153,22 +160,19 @@ export class SignupPage implements AfterViewInit {
   }
 
   async onSubmitAccount(accountForm: NgForm) {
-    this.onNext();
-  }
-
-
-  async onSignup(event) {
     const result: AjaxResult = await this.passportService.addUser(this.signup);
     if (result.success) {
       const toast = await this.toastController.create({ duration: 3000 });
       toast.message = '账号注册成功';
       toast.present();
+      this.onNext();
     } else {
       const toast = await this.toastController.create({ duration: 3000 });
-      toast.message = '账号已注册';
+      toast.message = '邮箱已被注册';
       toast.present();
     }
   }
+
 
   onLogin(event) {
     this.outlet.pop(1);

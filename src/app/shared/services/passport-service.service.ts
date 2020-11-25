@@ -78,6 +78,16 @@ export class PassportServiceService {
     return false;
   }
 
+  isPhoneOrEmailAvailable(phoneOrEmail: string) {
+    const users = this.localStorageService.get('Users', []);
+    for (const user of users) {
+      if (phoneOrEmail === user.phone || phoneOrEmail === user.email) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   async addUser(signupInfo: SignupInfo) {
     const users = this.localStorageService.get('Users', []);
     const user = this.initUser(signupInfo);
