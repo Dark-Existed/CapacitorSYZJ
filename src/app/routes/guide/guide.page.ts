@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
-export const APP_KEY = 'App';
+
 
 @Component({
   selector: 'app-guide',

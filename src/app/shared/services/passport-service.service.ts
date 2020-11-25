@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Console } from 'console';
 import { SignupInfo } from 'src/app/routes/passport/signup/signupInfo';
 
 import { AjaxResult } from '../class/ajax-result';

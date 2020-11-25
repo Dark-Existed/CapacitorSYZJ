@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+export const APP_KEY = 'App';
+
 @Injectable({
   providedIn: 'root'
 })
