@@ -1,9 +1,12 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, IonSlides, MenuController } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, IonSlides, ToastController } from '@ionic/angular';
+import { AjaxResult } from 'src/app/shared/class/ajax-result';
+import { PassportServiceService } from 'src/app/shared/services/passport-service.service';
 import { AuthenticationCodeService } from '../shared/authentication-code.service';
 import { SignupInfo } from './signupInfo';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -16,8 +19,11 @@ export class SignupPage implements AfterViewInit {
     private authentication: AuthenticationCodeService,
     private alertController: AlertController,
     private router: Router,
-    private menuController: MenuController,
+    private passportService: PassportServiceService,
+    private toastController: ToastController,
+    private outlet: IonRouterOutlet,
   ) { }
+
 
   @ViewChild('signupSlides') signupSlides: IonSlides;
 
@@ -150,17 +156,23 @@ export class SignupPage implements AfterViewInit {
     this.onNext();
   }
 
+
+  async onSignup(event) {
+    const result: AjaxResult = await this.passportService.addUser(this.signup);
+    if (result.success) {
+      const toast = await this.toastController.create({ duration: 3000 });
+      toast.message = '账号注册成功';
+      toast.present();
+    } else {
+      const toast = await this.toastController.create({ duration: 3000 });
+      toast.message = '账号已注册';
+      toast.present();
+    }
+  }
+
   onLogin(event) {
+    this.outlet.pop(1);
     this.router.navigateByUrl('/passport/login');
-  }
-
-
-  ionViewWillEnter() {
-    this.menuController.enable(false);
-  }
-
-  ionViewDidLeave() {
-    this.menuController.enable(true);
   }
 
 }

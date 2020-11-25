@@ -1,8 +1,8 @@
 export class AjaxResult {
   constructor(
-    private success: boolean,
-    private result: any,
-    private error?: { message: string; details: string; },
-    private targetUrl?: string,
-    private unAuthorizedRequest?: boolean) {}
+    public success: boolean,
+    public result: any,
+    public error?: { message: string; details: string; },
+    public targetUrl?: string,
+    public unAuthorizedRequest?: boolean) {}
 }

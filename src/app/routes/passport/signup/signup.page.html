@@ -1,15 +1,10 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>signup</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <div class="ion-text-center">
+
+  <div class="ion-text-center" style="margin-top: 33%;">
     <img class="logo" src="assets/img/logo.png" alt="">
   </div>
 
-  <ion-grid fixed style="width: 100%; padding: 0px 16px;">
+  <ion-grid fixed style="width: 100%; padding: 0px 16px; margin-top: 16px;">
     <ion-row>
       <ion-col size="2">
         <img src="assets/img/registered_one.png" alt="" *ngIf="slideIndex!==0">
@@ -39,7 +34,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-slides #signupSlides (ionSlideDidChange)="onSlideDidChange()">
+  <ion-slides #signupSlides style="margin-top: 16px;" (ionSlideDidChange)="onSlideDidChange()">
 
     <ion-slide>
       <form (ngSubmit)="onSubmitPhone(phoneForm)" #phoneForm="ngForm" class="normal">
@@ -129,7 +124,7 @@
             <ion-button expand="full" color="primary" (click)="onPrevious()">上一步</ion-button>
           </div>
           <div class="padding-horizontal">
-            <ion-button type="submit" expand="full" color="primary" [disabled]="accountForm.invalid">下一步</ion-button>
+            <ion-button type="submit" expand="full" color="primary" [disabled]="accountForm.invalid" (click)="onSignup($event)">下一步</ion-button>
           </div>
         </ion-list>
       </form>

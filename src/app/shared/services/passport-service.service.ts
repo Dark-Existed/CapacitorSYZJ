@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Console } from 'console';
 import { SignupInfo } from 'src/app/routes/passport/signup/signupInfo';
 
 import { AjaxResult } from '../class/ajax-result';
@@ -77,7 +78,7 @@ export class PassportServiceService {
     return false;
   }
 
-  addUser(signupInfo: SignupInfo) {
+  async addUser(signupInfo: SignupInfo) {
     const users = this.localStorageService.get('Users', []);
     const user = this.initUser(signupInfo);
 
@@ -94,8 +95,8 @@ export class PassportServiceService {
         user.id = users.length + 1;
         shop.id = shops.length + 1;
         user.shopId = shops.length + 1;
-        users.add(user);
-        shops.add(shop);
+        users.push(user);
+        shops.push(shop);
         this.localStorageService.set('Users', users);
         this.localStorageService.set('Shops', shops);
         return new AjaxResult(true, null);
@@ -104,8 +105,8 @@ export class PassportServiceService {
       user.id = 1;
       shop.id = shops.length + 1;
       user.shopId = shops.length + 1;
-      users.add(user);
-      shops.add(shop);
+      users.push(user);
+      shops.push(shop);
       this.localStorageService.set('Users', users);
       this.localStorageService.set('Shops', shops);
       return new AjaxResult(true, null);

@@ -7,7 +7,6 @@ import { LocalStorageService } from '../shared/services/local-storage.service';
   providedIn: 'root'
 })
 
-
 export class StartAppGuard implements CanActivate {
 
   constructor(private localStorageService: LocalStorageService, private router: Router) { }
