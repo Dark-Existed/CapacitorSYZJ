@@ -27,7 +27,7 @@ export class PassportServiceService {
     const user = new User();
     user.userName = this.uuid();
     user.phone = signupInfo.phone;
-    user.passwordToken = signupInfo.password;
+    user.passwordToken = this.generatePasswordToken(signupInfo.password);
     user.email = signupInfo.email;
     user.createTime = new Date().toString();
     return user;
@@ -50,10 +50,10 @@ export class PassportServiceService {
   confirmAccount(loginIdentifier: string, password: string): number {
     const users = this.localStorageService.get(USERS_KEY, []);
     for (const user of users) {
-      if (user.phone === loginIdentifier && user.passwordToken === password) {
+      if (user.phone === loginIdentifier && this.validatePassword(password, user.passwordToken)) {
         return 0;
       }
-      if (user.email === loginIdentifier && user.passwordToken === password) {
+      if (user.email === loginIdentifier && this.validatePassword(password, user.passwordToken)) {
         return 1;
       }
     }
