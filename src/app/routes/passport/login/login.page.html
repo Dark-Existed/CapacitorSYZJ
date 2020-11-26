@@ -1,9 +1,42 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-no-padding">
+  <img src="assets/img/logoin_title.jpg">
+  <div class="ion-padding-horizontal">
+    <form #loginForm="ngForm">
+      <ion-list class="ion-no-margin ion-no-padding">
+        <ion-item lines="none"></ion-item>
 
-<ion-content>
+        <ion-item>
+          <ion-label position="fixed">账号</ion-label>
+          <ion-input name="username" type="text" placeholder="手机号或者电子邮箱" [(ngModel)]="username"></ion-input>
+        </ion-item>
 
+        <ion-item class="ion-margin-top">
+          <ion-label position="fixed">密码</ion-label>
+          <ion-input name="password" type="password" placeholder="登录密码" [(ngModel)]="password"></ion-input>
+        </ion-item>
+        <ion-item lines="none"></ion-item>
+      </ion-list>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="full" color="primary" (click)="onLogin(loginForm)">登录</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="full" fill="outline" color="primary" href="/passport/signup">注册新账号</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button fill="clear" size="small" (click)="onForgotPassword()">忘记密码？</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-text-center">
+          <ion-col>查看演示</ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+    </form>
+  </div>
 </ion-content>

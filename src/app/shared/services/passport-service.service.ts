@@ -50,11 +50,8 @@ export class PassportServiceService {
   confirmAccount(loginIdentifier: string, password: string): number {
     const users = this.localStorageService.get(USERS_KEY, []);
     for (const user of users) {
-      if (user.phone === loginIdentifier && this.validatePassword(password, user.passwordToken)) {
-        return 0;
-      }
-      if (user.email === loginIdentifier && this.validatePassword(password, user.passwordToken)) {
-        return 1;
+      if ((user.phone === loginIdentifier || user.email === loginIdentifier) && this.validatePassword(password, user.passwordToken)) {
+        return user.id;
       }
     }
     return -1;
