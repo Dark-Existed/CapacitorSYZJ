@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { LocalStorageService } from './services/local-storage.service';
+import { CopyrightComponent } from './components/copyright/copyright.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    CopyrightComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -19,7 +22,8 @@ import { LocalStorageService } from './services/local-storage.service';
   exports: [
     CommonModule,
     FormsModule,
-    IonicModule
+    IonicModule,
+    CopyrightComponent
   ]
 })
 export class SharedModule { }

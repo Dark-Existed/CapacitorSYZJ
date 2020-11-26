@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { PassportServiceService } from 'src/app/shared/services/passport-service.service';
 
@@ -14,6 +15,7 @@ export class LoginPage implements OnInit {
   password: string;
 
   constructor(
+    private router: Router,
     private toastController: ToastController,
     private passportService: PassportServiceService,
   ) { }
@@ -48,6 +50,11 @@ export class LoginPage implements OnInit {
       }
     }
     // console.log(this.username);
+  }
+
+
+  onForgotPassword() {
+    this.router.navigateByUrl('/passport/forget-password');
   }
 
 }
