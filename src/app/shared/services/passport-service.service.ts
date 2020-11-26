@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SignupInfo } from 'src/app/routes/passport/signup/signupInfo';
-
+import CryptoJS from 'crypto-js';
 import { AjaxResult } from '../class/ajax-result';
 import { LoginAccount } from '../class/login-account';
 import { Shop } from '../class/shop';
@@ -132,6 +132,30 @@ export class PassportServiceService {
     return null;
   }
 
+  generatePasswordToken(key: string, iter = 10000): string {
+    const salt = CryptoJS.lib.WordArray.random(128 / 8);
+    const key256Bits = CryptoJS.PBKDF2(key, salt, {
+      keySize: 256 / 32,
+      hasher: CryptoJS.algo.SHA256,
+      iterations: iter,
+    });
+    const saltBase64 = CryptoJS.enc.Base64.stringify(salt);
+    const key256BitsBase64 = CryptoJS.enc.Base64.stringify(key256Bits);
+    return 'pbkdf2_sha256$' + iter.toString() + '$' + saltBase64 + '$' + key256BitsBase64;
+  }
+
+  validatePassword(key: string, hashKey: string): boolean {
+    const part = hashKey.split('$');
+    const iter = Number(part[1]);
+    const salt = CryptoJS.enc.Base64.parse(part[2]);
+    const key256Bits = CryptoJS.PBKDF2(key, salt, {
+      keySize: 256 / 32,
+      hasher: CryptoJS.algo.SHA256,
+      iterations: iter,
+    });
+    const hash = CryptoJS.enc.Base64.stringify(key256Bits);
+    return hash === part[3];
+  }
 
 }
 
