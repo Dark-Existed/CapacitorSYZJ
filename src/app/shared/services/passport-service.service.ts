@@ -50,12 +50,12 @@ export class PassportServiceService {
   }
 
   confirmAccount(loginIdentifier: string, password: string): AjaxResult {
-    const users: [User] = this.localStorageService.get(USERS_KEY, []);
+    const users: User[] = this.localStorageService.get(USERS_KEY, []);
     for (const user of users) {
       if ((user.phone === loginIdentifier || user.email === loginIdentifier) && this.validatePassword(password, user.passwordToken)) {
         if (loginIdentifier === user.phone) {
           return new AjaxResult(true, { userId: user.id, loginType: 0 });
-        } else {
+        } else if (loginIdentifier === user.email) {
           return new AjaxResult(true, { userId: user.id, loginType: 1 });
         }
       }
@@ -71,7 +71,7 @@ export class PassportServiceService {
     this.localStorageService.set(CURRENT_USER, currentUser);
   }
 
-  isRegistered(users: [User], signupInfo: SignupInfo): boolean {
+  isRegistered(users: User[], signupInfo: SignupInfo): boolean {
     for (const user of users) {
       if (signupInfo.phone === user.phone || signupInfo.email === user.email) {
         return true;
@@ -81,7 +81,7 @@ export class PassportServiceService {
   }
 
   isPhoneOrEmailAvailable(phoneOrEmail: string) {
-    const users = this.localStorageService.get(USERS_KEY, []);
+    const users: User[] = this.localStorageService.get(USERS_KEY, []);
     for (const user of users) {
       if (phoneOrEmail === user.phone || phoneOrEmail === user.email) {
         return false;
@@ -91,30 +91,19 @@ export class PassportServiceService {
   }
 
   async addUser(signupInfo: SignupInfo) {
-    const users = this.localStorageService.get(USERS_KEY, []);
+    const users: User[] = this.localStorageService.get(USERS_KEY, []);
     const user = this.initUser(signupInfo);
 
-    const shops = this.localStorageService.get(SHOPS_KEY, []);
+    const shops: Shop[] = this.localStorageService.get(SHOPS_KEY, []);
     const shop = this.initShop(signupInfo);
 
-    if (users.length !== 0) {
-      if (this.isRegistered(users, signupInfo)) {
-        return new AjaxResult(false, null, {
-          message: '你的手机号码或邮箱已经被注册',
-          details: null
-        });
-      } else {
-        user.id = users.length + 1;
-        shop.id = shops.length + 1;
-        user.shopId = shops.length + 1;
-        users.push(user);
-        shops.push(shop);
-        this.localStorageService.set(USERS_KEY, users);
-        this.localStorageService.set(SHOPS_KEY, shops);
-        return new AjaxResult(true, null);
-      }
+    if (this.isRegistered(users, signupInfo)) {
+      return new AjaxResult(false, null, {
+        message: '你的手机号码或邮箱已经被注册',
+        details: null
+      });
     } else {
-      user.id = 1;
+      user.id = users.length + 1;
       shop.id = shops.length + 1;
       user.shopId = shops.length + 1;
       users.push(user);
@@ -123,10 +112,11 @@ export class PassportServiceService {
       this.localStorageService.set(SHOPS_KEY, shops);
       return new AjaxResult(true, null);
     }
+
   }
 
   getUser(id: number): User {
-    const users = this.localStorageService.get(USERS_KEY, []);
+    const users: User[] = this.localStorageService.get(USERS_KEY, []);
     for (const user of users) {
       if (user.id === id) {
         return user;
