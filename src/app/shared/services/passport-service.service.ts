@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { SignupInfo } from 'src/app/routes/passport/signup/signupInfo';
 import CryptoJS from 'crypto-js';
 import { AjaxResult } from '../class/ajax-result';
-import { LoginAccount } from '../class/login-account';
+import { CurrentUser } from '../class/login-account';
 import { Shop } from '../class/shop';
 import { User } from '../class/user';
-import { LocalStorageService, SHOPS_KEY, USERS_KEY } from './local-storage.service';
+import { CURRENT_USER, LocalStorageService, SHOPS_KEY, USERS_KEY } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -33,19 +33,19 @@ export class PassportServiceService {
     return user;
   }
 
-  initLoginAccount(user: User): LoginAccount {
-    const loginAccount = new LoginAccount();
-    loginAccount.id = user.id;
-
-    return loginAccount;
-  }
-
   initShop(signupInfo: SignupInfo): Shop {
     const shop = new Shop();
     shop.shopName = signupInfo.shopName;
     shop.shopTel = signupInfo.phone;
     return shop;
   }
+
+  initCurrentUser(user: User): CurrentUser {
+    const currentUser = new CurrentUser();
+    currentUser.id = user.id;
+    return currentUser;
+  }
+
 
   confirmAccount(loginIdentifier: string, password: string): number {
     const users = this.localStorageService.get(USERS_KEY, []);
@@ -58,11 +58,11 @@ export class PassportServiceService {
   }
 
   login(user: User, loginType: number) {
-    const loginAccount = new LoginAccount();
-    loginAccount.id = user.id;
-    loginAccount.type = loginType;
-    loginAccount.loginTime = new Date().toString();
-    this.localStorageService.set('LoginAccount', loginAccount);
+    const currentUser = new CurrentUser();
+    currentUser.id = user.id;
+    currentUser.type = loginType;
+    currentUser.loginTime = new Date().toString();
+    this.localStorageService.set(CURRENT_USER, currentUser);
   }
 
   isRegistered(users, signupInfo: SignupInfo): boolean {

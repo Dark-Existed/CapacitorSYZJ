@@ -1,4 +1,4 @@
-export class LoginAccount {
+export class CurrentUser {
     id: number;
     type: number;
     loginTime: string;
