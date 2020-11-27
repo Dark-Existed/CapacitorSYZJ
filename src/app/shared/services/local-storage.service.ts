@@ -4,6 +4,7 @@ export const APP_KEY = 'App';
 export const USERS_KEY = 'Users';
 export const SHOPS_KEY = 'Shops';
 export const CURRENT_USER_KEY = 'CurrentUser';
+export const HISTORY_USER = 'HistoryUser';
 
 @Injectable({
   providedIn: 'root'

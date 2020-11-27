@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { SignupInfo } from 'src/app/routes/passport/signup/signupInfo';
 import CryptoJS from 'crypto-js';
 import { AjaxResult } from '../class/ajax-result';
-import { CurrentUser } from '../class/login-account';
+import { CurrentUser } from '../class/current-user';
 import { Shop } from '../class/shop';
 import { User } from '../class/user';
-import { LocalStorageService, SHOPS_KEY, USERS_KEY, CURRENT_USER_KEY } from './local-storage.service';
+import { LocalStorageService, SHOPS_KEY, USERS_KEY, CURRENT_USER_KEY, HISTORY_USER } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -41,12 +41,6 @@ export class PassportServiceService {
     shop.shopType = '';
     shop.shopTel = signupInfo.phone;
     return shop;
-  }
-
-  initCurrentUser(user: User): CurrentUser {
-    const currentUser = new CurrentUser();
-    currentUser.id = user.id;
-    return currentUser;
   }
 
   isRegistered(users: User[], signupInfo: SignupInfo): boolean {
@@ -103,7 +97,16 @@ export class PassportServiceService {
       this.localStorageService.set(SHOPS_KEY, shops);
       return new AjaxResult(true, { userId: user.id, loginType: 0 });
     }
+  }
 
+  getUser(id: number): User {
+    const users: User[] = this.localStorageService.get(USERS_KEY, []);
+    for (const user of users) {
+      if (user.id === id) {
+        return user;
+      }
+    }
+    return null;
   }
 
   login(userId: number, loginType: number) {
@@ -112,6 +115,12 @@ export class PassportServiceService {
     currentUser.type = loginType;
     currentUser.loginTime = new Date().toString();
     this.localStorageService.set(CURRENT_USER_KEY, currentUser);
+    const user = this.getUser(userId);
+    if (loginType === 0) {
+      this.localStorageService.set(HISTORY_USER, user.phone);
+    } else if (loginType === 1) {
+      this.localStorageService.set(HISTORY_USER, user.email);
+    }
   }
 
   getCueerntUser(): CurrentUser {
@@ -123,14 +132,8 @@ export class PassportServiceService {
     this.localStorageService.remove(CURRENT_USER_KEY);
   }
 
-  getUser(id: number): User {
-    const users: User[] = this.localStorageService.get(USERS_KEY, []);
-    for (const user of users) {
-      if (user.id === id) {
-        return user;
-      }
-    }
-    return null;
+  getHistoryUser(): string {
+    return this.localStorageService.get(HISTORY_USER, null);
   }
 
   generatePasswordToken(key: string, iter = 10000): string {

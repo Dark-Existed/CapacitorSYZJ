@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonRouterOutlet, ToastController } from '@ionic/angular';
+import { IonInput, IonRouterOutlet, ToastController } from '@ionic/angular';
 import { PassportServiceService } from 'src/app/shared/services/passport-service.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { PassportServiceService } from 'src/app/shared/services/passport-service
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements AfterViewInit {
 
   username: string;
   password: string;
@@ -21,24 +21,16 @@ export class LoginPage implements OnInit {
     private outlet: IonRouterOutlet,
   ) { }
 
-  ngOnInit() {
-    this.isLogin();
+  @ViewChild('accountInput') accountInput: IonInput;
+
+
+  ngAfterViewInit() {
+    this.fillHistoryUser();
   }
 
-  isLogin() {
-    const currentUser = this.passportService.getCueerntUser();
-    if (currentUser !== null) {
-      const loginTime = new Date(currentUser.loginTime);
-      const currentTime = new Date();
-      const diff = currentTime.getTime() - loginTime.getTime();
-      const diffDay = diff / (24 * 60 * 60 * 1000);
-      if (diffDay < 5) {
-        this.outlet.pop(1);
-        this.router.navigateByUrl('tabs');
-      } else {
-        this.passportService.removeCurrentUser();
-      }
-    }
+  fillHistoryUser() {
+    const historyUser = this.passportService.getHistoryUser();
+    this.accountInput.value = historyUser;
   }
 
   async onLogin(form: NgForm) {
@@ -67,7 +59,6 @@ export class LoginPage implements OnInit {
         toast.present();
       }
     }
-    // console.log(this.username);
   }
 
   onForgotPassword() {

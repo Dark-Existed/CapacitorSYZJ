@@ -25,7 +25,7 @@ export class SignupPage implements AfterViewInit {
   ) { }
 
 
-  @ViewChild('signupSlides') signupSlides: IonSlides;
+  @ViewChild('signupSlides', ) signupSlides: IonSlides;
 
   submited = false;
   codeValid = false;
