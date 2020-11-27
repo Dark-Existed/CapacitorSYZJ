@@ -5,7 +5,7 @@ import { AjaxResult } from '../class/ajax-result';
 import { CurrentUser } from '../class/login-account';
 import { Shop } from '../class/shop';
 import { User } from '../class/user';
-import { CURRENT_USER, LocalStorageService, SHOPS_KEY, USERS_KEY } from './local-storage.service';
+import { LocalStorageService, SHOPS_KEY, USERS_KEY, CURRENT_USER_KEY } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -49,28 +49,6 @@ export class PassportServiceService {
     return currentUser;
   }
 
-  confirmAccount(loginIdentifier: string, password: string): AjaxResult {
-    const users: User[] = this.localStorageService.get(USERS_KEY, []);
-    for (const user of users) {
-      if ((user.phone === loginIdentifier || user.email === loginIdentifier) && this.validatePassword(password, user.passwordToken)) {
-        if (loginIdentifier === user.phone) {
-          return new AjaxResult(true, { userId: user.id, loginType: 0 });
-        } else if (loginIdentifier === user.email) {
-          return new AjaxResult(true, { userId: user.id, loginType: 1 });
-        }
-      }
-    }
-    return new AjaxResult(false, null);
-  }
-
-  login(user: User, loginType: number) {
-    const currentUser = new CurrentUser();
-    currentUser.id = user.id;
-    currentUser.type = loginType;
-    currentUser.loginTime = new Date().toString();
-    this.localStorageService.set(CURRENT_USER, currentUser);
-  }
-
   isRegistered(users: User[], signupInfo: SignupInfo): boolean {
     for (const user of users) {
       if (signupInfo.phone === user.phone || signupInfo.email === user.email) {
@@ -90,12 +68,23 @@ export class PassportServiceService {
     return true;
   }
 
+  confirmAccount(loginIdentifier: string, password: string): AjaxResult {
+    const users: User[] = this.localStorageService.get(USERS_KEY, []);
+    for (const user of users) {
+      if ((user.phone === loginIdentifier || user.email === loginIdentifier) && this.validatePassword(password, user.passwordToken)) {
+        if (loginIdentifier === user.phone) {
+          return new AjaxResult(true, { userId: user.id, loginType: 0 });
+        } else if (loginIdentifier === user.email) {
+          return new AjaxResult(true, { userId: user.id, loginType: 1 });
+        }
+      }
+    }
+    return new AjaxResult(false, null);
+  }
+
   async addUser(signupInfo: SignupInfo) {
     const users: User[] = this.localStorageService.get(USERS_KEY, []);
-    const user = this.initUser(signupInfo);
-
     const shops: Shop[] = this.localStorageService.get(SHOPS_KEY, []);
-    const shop = this.initShop(signupInfo);
 
     if (this.isRegistered(users, signupInfo)) {
       return new AjaxResult(false, null, {
@@ -103,6 +92,8 @@ export class PassportServiceService {
         details: null
       });
     } else {
+      const user = this.initUser(signupInfo);
+      const shop = this.initShop(signupInfo);
       user.id = users.length + 1;
       shop.id = shops.length + 1;
       user.shopId = shops.length + 1;
@@ -113,6 +104,23 @@ export class PassportServiceService {
       return new AjaxResult(true, null);
     }
 
+  }
+
+  login(userId: number, loginType: number) {
+    const currentUser = new CurrentUser();
+    currentUser.id = userId;
+    currentUser.type = loginType;
+    currentUser.loginTime = new Date().toString();
+    this.localStorageService.set(CURRENT_USER_KEY, currentUser);
+  }
+
+  getCueerntUser(): CurrentUser {
+    const currentUser: CurrentUser = this.localStorageService.get(CURRENT_USER_KEY, null);
+    return currentUser;
+  }
+
+  removeCurrentUser() {
+    this.localStorageService.remove(CURRENT_USER_KEY);
   }
 
   getUser(id: number): User {

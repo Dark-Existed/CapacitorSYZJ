@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { IonRouterOutlet, ToastController } from '@ionic/angular';
 import { PassportServiceService } from 'src/app/shared/services/passport-service.service';
 
 @Component({
@@ -18,12 +18,28 @@ export class LoginPage implements OnInit {
     private router: Router,
     private toastController: ToastController,
     private passportService: PassportServiceService,
+    private outlet: IonRouterOutlet,
   ) { }
 
   ngOnInit() {
-
+    this.isLogin();
   }
 
+  isLogin() {
+    const currentUser = this.passportService.getCueerntUser();
+    if (currentUser !== null) {
+      const loginTime = new Date(currentUser.loginTime);
+      const currentTime = new Date();
+      const diff = currentTime.getTime() - loginTime.getTime();
+      const diffDay = diff / (24 * 60 * 60 * 1000);
+      if (diffDay < 5) {
+        this.outlet.pop(1);
+        this.router.navigateByUrl('tabs');
+      } else {
+        this.passportService.removeCurrentUser();
+      }
+    }
+  }
 
   async onLogin(form: NgForm) {
     const toast = await this.toastController.create({ duration: 3000 });
@@ -41,9 +57,11 @@ export class LoginPage implements OnInit {
     } else {
       const loginResult = this.passportService.confirmAccount(this.username, this.password);
       if (loginResult.success) {
-        // TODO 写入当前登录账号 跳转页面
+        this.passportService.login(loginResult.result.userId, loginResult.result.loginType);
         toast.message = '登录成功';
         toast.present();
+        this.outlet.pop(1);
+        this.router.navigateByUrl('tabs');
       } else {
         toast.message = '账号或密码有误';
         toast.present();
@@ -51,7 +69,6 @@ export class LoginPage implements OnInit {
     }
     // console.log(this.username);
   }
-
 
   onForgotPassword() {
     this.router.navigateByUrl('/passport/forget-password');

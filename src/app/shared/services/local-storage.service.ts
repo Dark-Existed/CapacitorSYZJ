@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 export const APP_KEY = 'App';
 export const USERS_KEY = 'Users';
 export const SHOPS_KEY = 'Shops';
-export const CURRENT_USER = 'CurrentUser';
+export const CURRENT_USER_KEY = 'CurrentUser';
 
 @Injectable({
   providedIn: 'root'

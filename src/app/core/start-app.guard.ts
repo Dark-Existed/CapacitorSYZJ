@@ -21,6 +21,7 @@ export class StartAppGuard implements CanActivate {
       this.localStorageService.set(APP_KEY, appConfig);
       return true;
     } else {
+      // ToDo 跳转登录界面
       this.router.navigateByUrl('tabs');
       return false;
     }
