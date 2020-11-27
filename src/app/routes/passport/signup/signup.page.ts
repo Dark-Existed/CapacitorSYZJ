@@ -38,6 +38,7 @@ export class SignupPage implements AfterViewInit {
   passwordFlag = true;
   confirmPasswordFlag = true;
 
+  userId: number;
   signup: SignupInfo = {
     phone: '',
     email: '',
@@ -160,9 +161,10 @@ export class SignupPage implements AfterViewInit {
   }
 
   async onSubmitAccount(accountForm: NgForm) {
-    const result: AjaxResult = await this.passportService.addUser(this.signup);
-    if (result.success) {
+    const registResult: AjaxResult = await this.passportService.addUser(this.signup);
+    if (registResult.success) {
       const toast = await this.toastController.create({ duration: 3000 });
+      this.userId = registResult.result.userId;
       toast.message = '账号注册成功';
       toast.present();
       this.onNext();
@@ -175,6 +177,7 @@ export class SignupPage implements AfterViewInit {
 
 
   onLogin(event) {
+    this.passportService.login(this.userId, 0);
     this.outlet.pop(1);
     this.router.navigateByUrl('/passport/login');
   }

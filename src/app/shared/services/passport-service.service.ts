@@ -101,7 +101,7 @@ export class PassportServiceService {
       shops.push(shop);
       this.localStorageService.set(USERS_KEY, users);
       this.localStorageService.set(SHOPS_KEY, shops);
-      return new AjaxResult(true, null);
+      return new AjaxResult(true, { userId: user.id, loginType: 0 });
     }
 
   }
