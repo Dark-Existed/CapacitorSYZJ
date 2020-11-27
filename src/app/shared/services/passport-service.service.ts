@@ -27,6 +27,7 @@ export class PassportServiceService {
     const user = new User();
     user.userName = this.uuid();
     user.phone = signupInfo.phone;
+    user.wechatId = '';
     user.passwordToken = this.generatePasswordToken(signupInfo.password);
     user.email = signupInfo.email;
     user.createTime = new Date().toString();
@@ -36,6 +37,8 @@ export class PassportServiceService {
   initShop(signupInfo: SignupInfo): Shop {
     const shop = new Shop();
     shop.shopName = signupInfo.shopName;
+    shop.shortName = '';
+    shop.shopType = '';
     shop.shopTel = signupInfo.phone;
     return shop;
   }
@@ -46,15 +49,18 @@ export class PassportServiceService {
     return currentUser;
   }
 
-
-  confirmAccount(loginIdentifier: string, password: string): number {
-    const users = this.localStorageService.get(USERS_KEY, []);
+  confirmAccount(loginIdentifier: string, password: string): AjaxResult {
+    const users: [User] = this.localStorageService.get(USERS_KEY, []);
     for (const user of users) {
       if ((user.phone === loginIdentifier || user.email === loginIdentifier) && this.validatePassword(password, user.passwordToken)) {
-        return user.id;
+        if (loginIdentifier === user.phone) {
+          return new AjaxResult(true, { userId: user.id, loginType: 0 });
+        } else {
+          return new AjaxResult(true, { userId: user.id, loginType: 1 });
+        }
       }
     }
-    return -1;
+    return new AjaxResult(false, null);
   }
 
   login(user: User, loginType: number) {
@@ -65,7 +71,7 @@ export class PassportServiceService {
     this.localStorageService.set(CURRENT_USER, currentUser);
   }
 
-  isRegistered(users, signupInfo: SignupInfo): boolean {
+  isRegistered(users: [User], signupInfo: SignupInfo): boolean {
     for (const user of users) {
       if (signupInfo.phone === user.phone || signupInfo.email === user.email) {
         return true;
@@ -119,7 +125,7 @@ export class PassportServiceService {
     }
   }
 
-  getCurrentUser(id: number): User {
+  getUser(id: number): User {
     const users = this.localStorageService.get(USERS_KEY, []);
     for (const user of users) {
       if (user.id === id) {

@@ -39,8 +39,8 @@ export class LoginPage implements OnInit {
       toast.message = '请输入密码';
       toast.present();
     } else {
-      const userId = this.passportService.confirmAccount(this.username, this.password);
-      if (userId !== -1) {
+      const loginResult = this.passportService.confirmAccount(this.username, this.password);
+      if (loginResult.success) {
         // TODO 写入当前登录账号 跳转页面
         toast.message = '登录成功';
         toast.present();
