@@ -39,6 +39,7 @@ export class StartAppGuard implements CanActivate {
       const diff = currentTime.getTime() - loginTime.getTime();
       const diffDay = diff / (24 * 60 * 60 * 1000);
       if (diffDay < 5) {
+        this.passportService.updateCurrentUser(currentUser);
         this.router.navigateByUrl('tabs');
       } else {
         this.passportService.removeCurrentUser();

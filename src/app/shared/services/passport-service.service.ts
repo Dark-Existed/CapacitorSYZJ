@@ -128,6 +128,11 @@ export class PassportServiceService {
     return currentUser;
   }
 
+  updateCurrentUser(currentUser: CurrentUser) {
+    currentUser.loginTime = new Date().toString();
+    this.localStorageService.set(CURRENT_USER_KEY, currentUser);
+  }
+
   removeCurrentUser() {
     this.localStorageService.remove(CURRENT_USER_KEY);
   }
