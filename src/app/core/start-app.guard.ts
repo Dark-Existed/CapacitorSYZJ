@@ -45,6 +45,8 @@ export class StartAppGuard implements CanActivate {
         this.passportService.removeCurrentUser();
         this.router.navigateByUrl('/passport/login');
       }
+    } else {
+      this.router.navigateByUrl('/passport/login');
     }
   }
 
