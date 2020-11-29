@@ -179,7 +179,7 @@ export class SignupPage implements AfterViewInit {
   onLogin(event) {
     this.passportService.login(this.userId, 0);
     this.outlet.pop(1);
-    this.router.navigateByUrl('/passport/login');
+    this.router.navigateByUrl('/tabs');
   }
 
 }
