@@ -127,7 +127,6 @@ export class PassportServiceService {
     }
   }
 
-
   /*
    * 获取用户
    * @param {number} id 用户id
