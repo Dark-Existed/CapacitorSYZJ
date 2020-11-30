@@ -65,8 +65,9 @@ export class PassportServiceService {
   confirmAccount(loginIdentifier: string, password: string): AjaxResult {
     const users: User[] = this.localStorageService.get(USERS_KEY, []);
     for (const user of users) {
-      if ((user.phone === loginIdentifier || user.email === loginIdentifier) && this.validatePassword(password, user.passwordToken)) {
-        if (loginIdentifier === user.phone) {
+      if ((user.phone.toString() === loginIdentifier || user.email === loginIdentifier) &&
+      this.validatePassword(password, user.passwordToken)) {
+        if (loginIdentifier === user.phone.toString()) {
           return new AjaxResult(true, { userId: user.id, loginType: 0 });
         } else if (loginIdentifier === user.email) {
           return new AjaxResult(true, { userId: user.id, loginType: 1 });
