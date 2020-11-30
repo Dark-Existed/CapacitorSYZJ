@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { LocalStorageService } from './services/local-storage.service';
 import { CopyrightComponent } from './components/copyright/copyright.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -14,7 +15,8 @@ import { CopyrightComponent } from './components/copyright/copyright.component';
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule
+    IonicModule,
+    HttpClientModule
   ],
   providers: [
     LocalStorageService

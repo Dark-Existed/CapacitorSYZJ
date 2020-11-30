@@ -1,12 +1,11 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, IonRouterOutlet, IonSlides, ToastController } from '@ionic/angular';
+import { IonRouterOutlet, IonSlides, ToastController } from '@ionic/angular';
 import { AjaxResult } from 'src/app/shared/class/ajax-result';
 import { PassportServiceService } from 'src/app/shared/services/passport-service.service';
 import { AuthenticationCodeService } from '../shared/authentication-code.service';
 import { SignupInfo } from './signupInfo';
-import { from } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -17,7 +16,6 @@ export class SignupPage implements AfterViewInit {
 
   constructor(
     private authentication: AuthenticationCodeService,
-    private alertController: AlertController,
     private router: Router,
     private passportService: PassportServiceService,
     private toastController: ToastController,
@@ -25,11 +23,10 @@ export class SignupPage implements AfterViewInit {
   ) { }
 
 
-  @ViewChild('signupSlides', ) signupSlides: IonSlides;
+  @ViewChild('signupSlides') signupSlides: IonSlides;
 
   submited = false;
   codeValid = false;
-  code: string;
 
   slideIndex = 0;
 
@@ -82,10 +79,6 @@ export class SignupPage implements AfterViewInit {
     this.signupSlides.lockSwipeToPrev(true);
   }
 
-  getMessage() {
-    this.authentication.getMessage();
-  }
-
   async onSubmitPhone(form: NgForm) {
     // this.submited = true;
     if (form.valid) {
@@ -101,33 +94,39 @@ export class SignupPage implements AfterViewInit {
 
   // TODO 待完成
   async onSendSMS() {
+    let countDown = 59;
     this.codemessage.flag = true;
+    const timer = setInterval(() => {
+      this.codemessage.content = countDown + 's';
+      countDown -= 1;
+      if (countDown < 0) {
+        clearInterval(timer);
+        this.codemessage.flag = false;
+        this.codemessage.content = '获取验证码';
+      }
+    }, 1000);
     this.codemessage.count += 1;
     if (this.codemessage.count > this.codemessage.maxcount) {
-      this.codemessage.content = ' 请稍后再试 ';
+      this.codemessage.content = '请稍后再试';
     } else {
-      this.code = this.authentication.createCode(4);
+      this.authentication.createCode();
+      console.log(this.authentication.code);
+      this.authentication.sendSMS(this.signup.phone);
     }
   }
 
   // TODO 待完成
   async onValidateCode(form: NgForm) {
-    this.codeValid = true;
-    this.onNext();
-    // if (form.valid) {
-    //   if (this.authentication.validate(this.signup.code)) {
-    //     console.log('true');
-    //     this.codeValid = true;
-    //     this.onNext();
-    //   } else {
-    //     const alert = await this.alertController.create({
-    //       header: '提示',
-    //       message: '验证码不正确！',
-    //       buttons: ['确定']
-    //     });
-    //     alert.present();
-    //   }
-    // }
+    if (form.valid) {
+      if (this.authentication.validate(this.signup.code)) {
+        this.codeValid = true;
+        this.onNext();
+      } else {
+        const toast = await this.toastController.create({ duration: 3000 });
+        toast.message = '验证码有误';
+        toast.present();
+      }
+    }
   }
 
   validEmail() {

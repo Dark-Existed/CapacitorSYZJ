@@ -63,18 +63,18 @@
         <ion-list>
           <div style="display: flex; align-items: center;">
             <ion-item style="flex: 1;">
-              <ion-input name="code" type="number" placeholder="输入验证码" [(ngModel)]="signup.code" #code="ngModel">
+              <ion-input name="code" type="text" required  pattern="^[0-9]{4}$" placeholder="输入验证码" [(ngModel)]="signup.code" #code="ngModel">
               </ion-input>
             </ion-item>
             <ion-button color="primary" slot="end" (click)="onSendSMS()" [disabled]="codemessage.flag">
               {{codemessage.content}}</ion-button>
           </div>
           <div class="padding-horizontal">
-            <ion-button expand="full" color="primary" [disabled]="codeForm.invalid" (click)="onPrevious()">上一步
+            <ion-button expand="full" color="primary" (click)="onPrevious()">上一步
             </ion-button>
           </div>
           <div class="padding-horizontal">
-            <ion-button type="submit" expand="full" color="primary">下一步</ion-button>
+            <ion-button type="submit" expand="full" [disabled]="codeForm.invalid" color="primary">下一步</ion-button>
           </div>
         </ion-list>
       </form>
