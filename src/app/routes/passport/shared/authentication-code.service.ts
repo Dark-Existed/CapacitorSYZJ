@@ -18,8 +18,6 @@ export class AuthenticationCodeService {
 
   createCode(count: number = 4): string {
     this.code = '';
-    // 10分钟内有效
-    // this.deadline = Date.now() + 60 * 10 * 1000;
     for (let i = 0; i < count; i++) {
       const c = (Math.random() * 9);
       this.code += Math.round(c).toString();
@@ -35,10 +33,10 @@ export class AuthenticationCodeService {
   }
 
 
-  sendSMS(phone: string): void {
+  sendSMS(phone: string, timeMinute: number = 10): void {
     const rand = Math.floor(Math.random() * 10000000000);
     const now = Math.floor(Date.now() / 1000);
-    this.deadline = now + 60 * 10 * 1000;
+    this.deadline = now + 60 * timeMinute * 1000;
 
     const smsConfig = new SMSConfig();
     const strSig = 'appkey=' + smsConfig.appKey + '&random=' + rand + '&time=' + now + '&mobile=' + phone;
