@@ -162,7 +162,6 @@ export class PassportServiceService {
     }
   }
 
-
   /*
    * 获取当前登录用户
    * @return {*}  {CurrentUser} 当前登录用户
@@ -182,7 +181,6 @@ export class PassportServiceService {
     currentUser.loginTime = new Date().toString();
     this.localStorageService.set(CURRENT_USER_KEY, currentUser);
   }
-
 
   /*
    * 移除当前登录用户
@@ -219,7 +217,6 @@ export class PassportServiceService {
     const key256BitsBase64 = CryptoJS.enc.Base64.stringify(key256Bits);
     return 'pbkdf2_sha256$' + iter.toString() + '$' + saltBase64 + '$' + key256BitsBase64;
   }
-
 
   /*
    * 验证密码是否正确
