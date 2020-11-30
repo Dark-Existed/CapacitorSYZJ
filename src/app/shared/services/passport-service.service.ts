@@ -43,6 +43,14 @@ export class PassportServiceService {
     return shop;
   }
 
+
+  /*
+   * 是否已经注册过
+   * @param {User[]} users 用户列表
+   * @param {SignupInfo} signupInfo 注册信息
+   * @return {*}  {boolean} 是否注册过
+   * @memberof PassportServiceService
+   */
   isRegistered(users: User[], signupInfo: SignupInfo): boolean {
     for (const user of users) {
       if (signupInfo.phone === user.phone || signupInfo.email === user.email) {
@@ -52,6 +60,12 @@ export class PassportServiceService {
     return false;
   }
 
+  /*
+   * 手机或者邮箱是否可用
+   * @param {string} phoneOrEmail 手机或邮箱
+   * @return {*} 是否可用于注册
+   * @memberof PassportServiceService
+   */
   isPhoneOrEmailAvailable(phoneOrEmail: string) {
     const users: User[] = this.localStorageService.get(USERS_KEY, []);
     for (const user of users) {
@@ -62,6 +76,13 @@ export class PassportServiceService {
     return true;
   }
 
+  /*
+   * 验证账号密码是否正确
+   * @param {string} loginIdentifier 登录凭证
+   * @param {string} password 密码
+   * @return {AjaxResult} 登录结果
+   * @memberof PassportServiceService
+   */
   confirmAccount(loginIdentifier: string, password: string): AjaxResult {
     const users: User[] = this.localStorageService.get(USERS_KEY, []);
     for (const user of users) {
@@ -77,6 +98,12 @@ export class PassportServiceService {
     return new AjaxResult(false, null);
   }
 
+  /*
+   * 添加用户
+   * @param {SignupInfo} signupInfo
+   * @return {*}
+   * @memberof PassportServiceService
+   */
   async addUser(signupInfo: SignupInfo) {
     const users: User[] = this.localStorageService.get(USERS_KEY, []);
     const shops: Shop[] = this.localStorageService.get(SHOPS_KEY, []);
@@ -100,6 +127,13 @@ export class PassportServiceService {
     }
   }
 
+
+  /*
+   * 获取用户
+   * @param {number} id 用户id
+   * @return {*}  {User} 找不到用户则返回null
+   * @memberof PassportServiceService
+   */
   getUser(id: number): User {
     const users: User[] = this.localStorageService.get(USERS_KEY, []);
     for (const user of users) {
@@ -110,6 +144,12 @@ export class PassportServiceService {
     return null;
   }
 
+  /*
+   * 用户登录同时本地记录登录用户
+   * @param {number} userId 用户id
+   * @param {number} loginType 登录方式
+   * @memberof PassportServiceService
+   */
   login(userId: number, loginType: number) {
     const currentUser = new CurrentUser();
     currentUser.id = userId;
@@ -124,24 +164,52 @@ export class PassportServiceService {
     }
   }
 
+
+  /*
+   * 获取当前登录用户
+   * @return {*}  {CurrentUser} 当前登录用户
+   * @memberof PassportServiceService
+   */
   getCueerntUser(): CurrentUser {
     const currentUser: CurrentUser = this.localStorageService.get(CURRENT_USER_KEY, null);
     return currentUser;
   }
 
+  /*
+   * 更新当前登录用户过期时间
+   * @param {CurrentUser} currentUser
+   * @memberof PassportServiceService
+   */
   updateCurrentUser(currentUser: CurrentUser) {
     currentUser.loginTime = new Date().toString();
     this.localStorageService.set(CURRENT_USER_KEY, currentUser);
   }
 
+
+  /*
+   * 移除当前登录用户
+   * @memberof PassportServiceService
+   */
   removeCurrentUser() {
     this.localStorageService.remove(CURRENT_USER_KEY);
   }
 
+  /*
+   * 获取历史登录用户
+   * @return {*}  {string}
+   * @memberof PassportServiceService
+   */
   getHistoryUser(): string {
     return this.localStorageService.get(HISTORY_USER, null);
   }
 
+  /*
+   * pbkdf2_sha156 Hash
+   * @param {string} key 密码
+   * @param {number} [iter=10000] 迭代轮数
+   * @return {*}  {string} hash 后的返回值
+   * @memberof PassportServiceService
+   */
   generatePasswordToken(key: string, iter = 10000): string {
     const salt = CryptoJS.lib.WordArray.random(128 / 8);
     const key256Bits = CryptoJS.PBKDF2(key, salt, {
@@ -154,6 +222,14 @@ export class PassportServiceService {
     return 'pbkdf2_sha256$' + iter.toString() + '$' + saltBase64 + '$' + key256BitsBase64;
   }
 
+
+  /*
+   * 验证密码是否正确
+   * @param {string} key 密码
+   * @param {string} hashKey hash过的密码
+   * @return {*}  {boolean} 验证结果
+   * @memberof PassportServiceService
+   */
   validatePassword(key: string, hashKey: string): boolean {
     const part = hashKey.split('$');
     const iter = Number(part[1]);
