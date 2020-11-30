@@ -43,7 +43,6 @@ export class PassportServiceService {
     return shop;
   }
 
-
   /*
    * 是否已经注册过
    * @param {User[]} users 用户列表
