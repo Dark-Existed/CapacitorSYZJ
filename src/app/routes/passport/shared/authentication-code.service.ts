@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import CryptoJS from 'crypto-js';
 import { HttpClient } from '@angular/common/http';
-import { SMSConfig } from '../../../shared/config/sms';
+import { SMSConfig } from '../../../shared/config/sms-config';
 
 @Injectable({
   providedIn: 'root'
