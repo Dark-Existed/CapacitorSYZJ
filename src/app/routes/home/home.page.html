@@ -50,10 +50,12 @@
   <ion-grid fixed style="padding: 0%;">
     <ion-row class="grid">
       <ion-col class="grid-item" size="3" *ngFor="let button of buttons">
-          <img src="{{ button.iconSrc }}" style="width: 40%;">
+          <img src="{{ button.iconSrc }}" style="width: 40%; padding-top: 16px;">
           <p style="font-size: 14px; font-weight: 600; color: #5c5c5c;">{{ button.name }}</p>
         </ion-col>
     </ion-row>
   </ion-grid>
+
+  <app-copyright [bottom]="'16px'"></app-copyright>
 
 </ion-content>
