@@ -8,6 +8,14 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
+        path: 'home',
+        loadChildren: () => import('../routes/home/home.module').then(m => m.HomePageModule)
+      },
+      {
+        path: 'me',
+        loadChildren: () => import('../routes/me/me.module').then(m => m.MePageModule)
+      },
+      {
         path: 'tab1',
         loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
       },
@@ -37,4 +45,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }
