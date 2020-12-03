@@ -73,7 +73,7 @@ export class AuthenticationCodeService {
       },
       time: now,
       tpl_id: smsConfig.tplId
-    });
+    }).toPromise();
   }
 
 }
