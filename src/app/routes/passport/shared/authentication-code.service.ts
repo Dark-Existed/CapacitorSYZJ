@@ -39,8 +39,6 @@ export class AuthenticationCodeService {
    */
   validate(value: string): boolean {
     const now = Math.floor(Date.now() / 1000);
-    console.log(now);
-    console.log(this.deadline);
     return (value === this.code) && (now < this.deadline);
   }
 
