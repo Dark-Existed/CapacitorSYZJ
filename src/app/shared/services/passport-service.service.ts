@@ -86,7 +86,7 @@ export class PassportServiceService {
     const users: User[] = this.localStorageService.get(USERS_KEY, []);
     for (const user of users) {
       if ((user.phone.toString() === loginIdentifier || user.email === loginIdentifier) &&
-      this.validatePassword(password, user.passwordToken)) {
+        this.validatePassword(password, user.passwordToken)) {
         if (loginIdentifier === user.phone.toString()) {
           return new AjaxResult(true, { userId: user.id, loginType: 0 });
         } else if (loginIdentifier === user.email) {
@@ -137,6 +137,23 @@ export class PassportServiceService {
     for (const user of users) {
       if (user.id === id) {
         return user;
+      }
+    }
+    return null;
+  }
+
+
+  /*
+   * 获取店铺
+   * @param {number} id 店铺id
+   * @return {*}  {Shop} 找不到店铺则返回null
+   * @memberof PassportServiceService
+   */
+  getShop(id: number): Shop {
+    const shops: Shop[] = this.localStorageService.get(SHOPS_KEY, []);
+    for (const shop of shops) {
+      if (shop.id === id) {
+        return shop;
       }
     }
     return null;

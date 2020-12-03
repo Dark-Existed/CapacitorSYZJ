@@ -1,17 +1,25 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>me</ion-title>
+<div>
+  <ion-toolbar color="primary">
+    <ion-title slot="secondary">我的</ion-title>
+    <ion-icon slot="end" name="settings-outline" style="height: 24px; width: 24px; margin-right: 16px;"></ion-icon>
   </ion-toolbar>
-</ion-header>
-
-<ion-list>
-  <ion-item color="medium">
+  <ion-item color="primary">
     <ion-label>
       <ion-text>
-        <h2>池老标的老店</h2>
+        <h2>{{ shop.shopName }}</h2>
       </ion-text>
-      <p>15960033300</p>
+      <p>{{ shop.shopTel }}</p>
     </ion-label>
-    <ion-badge slot="end" color="primary">高级版</ion-badge>
+    <ion-badge slot="end" color="light">高级版</ion-badge>
   </ion-item>
-</ion-list>
+
+  <ion-list>
+    <ion-menu-toggle auto-hide="false" *ngFor="let appPage of appPages">
+      <ion-item detail [routerDirection]="'root'" [routerLink]="appPage.url">
+        <ion-icon slot="start" [name]="appPage.icon"></ion-icon>
+        <ion-label>{{ appPage.title }}</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-list>
+
+</div>

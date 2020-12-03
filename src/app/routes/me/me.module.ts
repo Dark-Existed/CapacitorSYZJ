@@ -7,12 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { MePageRoutingModule } from './me-routing.module';
 
 import { MePage } from './me.page';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
+    SharedModule,
     MePageRoutingModule
   ],
   declarations: [MePage]
