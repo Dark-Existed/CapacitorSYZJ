@@ -21,6 +21,10 @@ const routes: Routes = [
     path: 'passport',
     loadChildren: () => import('./routes/passport/passport.module').then(m => m.PassportModule),
   },
+  {
+    path: 'setting',
+    loadChildren: () => import('./routes/setting/setting.module').then( m => m.SettingPageModule)
+  },
 ];
 
 @NgModule({
