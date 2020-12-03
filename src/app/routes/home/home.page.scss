@@ -1,7 +1,24 @@
 .less-equal {
-    color: #10dc60;
+    color: var(--ion-color-success);
+}
+.greater {
+    color: var(--ion-color-danger);
 }
 
-.greater {
-    color: #f04141;
+.grid {
+    border-right: 1px solid #ececec;
+    border-bottom: 1px solid #ececec;
+    .grid-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 25vw;
+        border-top: 1px solid #ececec;
+        border-left: 1px solid #ececec;
+        div {
+            margin-top: 9px;
+            text-align: center;
+        }
+    }
 }

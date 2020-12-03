@@ -21,11 +21,31 @@
     </ion-slide>
   </ion-slides>
 
-  <ion-grid fixed>
+  <ion-grid style="background-color: #f6f5fa;">
     <ion-row>
-      
+      <ion-col *ngFor="let sale of sales">
+        <p style="font-size: 14px; font-weight: 500; margin: 0%; color: #78777c">{{ sale.title }}</p>
+        <ion-row style="align-items: baseline;">
+          <p style="font-size: 18px; font-weight: bold; color: #78777c;"><span>{{ sale.current | number:'1.2-2' }}</span>
+          </p>
+          <p style="font-size: 8px; color: #78777c;">元</p>
+        </ion-row>
+        <p style="align-items: baseline; font-size: 12px; font-weight: 500; margin: 0%; color: #78777c">
+          {{ sale.content }}
+          <span
+            [ngClass]="{'less-equal': sale.current - sale.previous <= 0,'greater':sale.current - sale.previous > 0}">
+            {{ sale.current - sale.previous | number:'1.2-2' }}
+          </span>
+          <ng-container [ngSwitch]="getArrowStatus(sale.current, sale.previous)" ]>
+            <ion-icon name="arrow-up" color="danger" *ngSwitchCase="1"></ion-icon>
+            <ion-icon name="arrow-forward" color="success" *ngSwitchCase="0"></ion-icon>
+            <ion-icon name="arrow-down" color="success" *ngSwitchCase="-1"></ion-icon>
+          </ng-container>
+        </p>
+      </ion-col>
     </ion-row>
-    
   </ion-grid>
+
+
 
 </ion-content>
