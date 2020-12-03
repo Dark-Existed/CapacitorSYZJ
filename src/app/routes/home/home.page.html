@@ -26,7 +26,8 @@
       <ion-col *ngFor="let sale of sales">
         <p style="font-size: 14px; font-weight: 500; margin: 0%; color: #78777c">{{ sale.title }}</p>
         <ion-row style="align-items: baseline;">
-          <p style="font-size: 18px; font-weight: bold; color: #78777c;"><span>{{ sale.current | number:'1.2-2' }}</span>
+          <p style="font-size: 18px; font-weight: bold; color: #78777c;">
+            <span>{{ sale.current | number:'1.2-2' }}</span>
           </p>
           <p style="font-size: 8px; color: #78777c;">元</p>
         </ion-row>
@@ -46,6 +47,13 @@
     </ion-row>
   </ion-grid>
 
-
+  <ion-grid fixed style="padding: 0%;">
+    <ion-row class="grid">
+      <ion-col class="grid-item" size="3" *ngFor="let button of buttons">
+          <img src="{{ button.iconSrc }}" style="width: 40%;">
+          <p style="font-size: 14px; font-weight: 600; color: #5c5c5c;">{{ button.name }}</p>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
