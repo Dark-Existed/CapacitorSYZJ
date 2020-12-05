@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IonRouterOutlet } from '@ionic/angular';
 import { SettingService } from '../../shared/setting.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class EditPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private settingService: SettingService,
+    private outlet: IonRouterOutlet,
   ) {
     activatedRoute.queryParams.subscribe(queryParms => {
       this.title = queryParms.title;
@@ -28,6 +30,7 @@ export class EditPage implements OnInit {
 
   onSave() {
     this.settingService.updateParams(this.value, this.property);
+    this.outlet.pop(1);
   }
 
 }
