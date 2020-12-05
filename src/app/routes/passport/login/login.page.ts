@@ -29,12 +29,12 @@ export class LoginPage implements AfterViewInit {
   }
 
   fillHistoryUser() {
-    const historyUser = this.passportService.getHistoryUser();
+    const historyUser: string = this.passportService.getHistoryUser();
     this.username = historyUser;
   }
 
   async onLogin(form: NgForm) {
-    const toast = await this.toastController.create({ duration: 3000 });
+    const toast = await this.toastController.create({ duration: 2000 });
     const phonePattern = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,3,5-9]))\d{8}$/;
     const emailPattern = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     if (this.username == null) {
