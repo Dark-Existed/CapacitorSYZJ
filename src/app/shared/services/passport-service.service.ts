@@ -216,6 +216,24 @@ export class PassportServiceService {
     return this.localStorageService.get(HISTORY_USER, null);
   }
 
+
+  /*
+   * 更新用户密码
+   * @param {string} key 密码
+   * @param {number} userId 用户id
+   * @memberof PassportServiceService
+   */
+  updateUserPasswordToken(key: string, userId: number) {
+    const users: User[] = this.localStorageService.get(USERS_KEY, []);
+    for (const user of users) {
+      if (user.id === userId) {
+        user.passwordToken = this.generatePasswordToken(key);
+        break;
+      }
+    }
+    this.localStorageService.set(USERS_KEY, users);
+  }
+
   /*
    * pbkdf2_sha156 Hash
    * @param {string} key 密码
