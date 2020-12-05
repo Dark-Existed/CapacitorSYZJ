@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { APP_KEY, LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { PassportServiceService } from 'src/app/shared/services/passport-service.service';
 
 @Component({
   selector: 'app-setting',
@@ -11,7 +13,9 @@ export class SettingPage implements OnInit {
   appConfig: any;
 
   constructor(
-    private localStorageService: LocalStorageService
+    private router: Router,
+    private localStorageService: LocalStorageService,
+    private passportService: PassportServiceService,
   ) {
     this.appConfig = this.localStorageService.get(APP_KEY, {
       isLaunched: false,
@@ -21,6 +25,11 @@ export class SettingPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  logOut() {
+    this.passportService.removeCurrentUser();
+    this.router.navigateByUrl('');
   }
 
 }

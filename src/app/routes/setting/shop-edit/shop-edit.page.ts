@@ -12,7 +12,7 @@ export class ShopEditPage implements OnInit {
 
   currentUser: CurrentUser;
   user: User;
-  
+
   constructor(
     private passportService: PassportServiceService,
   ) {
