@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IonRouterOutlet } from '@ionic/angular';
 import { SettingService } from '../../shared/setting.service';
 
@@ -18,6 +18,7 @@ export class EditPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private settingService: SettingService,
     private outlet: IonRouterOutlet,
+    private router: Router,
   ) {
     activatedRoute.queryParams.subscribe(queryParms => {
       this.title = queryParms.title;
@@ -30,7 +31,8 @@ export class EditPage implements OnInit {
 
   onSave() {
     this.settingService.updateParams(this.value, this.property);
-    this.outlet.pop(1);
+    this.outlet.pop(2);
+    this.router.navigateByUrl('/setting/shop');
   }
 
 }
