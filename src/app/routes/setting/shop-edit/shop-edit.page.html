@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="返回"></ion-back-button>
     </ion-buttons>
-    <ion-title>店铺信息</ion-title>
+    <ion-title>店铺设置</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -21,17 +21,19 @@
 
     <ion-item>
       <ion-label>注册时间</ion-label>
+      <ion-note style="align-self: center; font-size: 13px;">{{ user.createTime | date: "yyyy-MM-dd HH:mm:ss" }}</ion-note>
     </ion-item>
 
     <ion-item>
       <ion-label>手机号码</ion-label>
-      <ion-note slot="end">15960033388</ion-note>
+      <ion-note style="align-self: center; font-size: 13px;">{{ user.phone }}</ion-note>
     </ion-item>
   </ion-list>
 
   <ion-list inset="true" lines="full">
     <ion-item>
       <ion-label>电子邮件</ion-label>
+      <ion-note style="align-self: center; font-size: 13px;">{{ user.email }}</ion-note>
     </ion-item>
 
     <ion-item detail>
