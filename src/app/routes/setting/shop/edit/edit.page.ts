@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SettingService } from '../../shared/setting.service';
 
 @Component({
   selector: 'app-edit',
@@ -14,6 +15,7 @@ export class EditPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private settingService: SettingService,
   ) {
     activatedRoute.queryParams.subscribe(queryParms => {
       this.title = queryParms.title;
@@ -25,7 +27,7 @@ export class EditPage implements OnInit {
   }
 
   onSave() {
-
+    
   }
 
 }
