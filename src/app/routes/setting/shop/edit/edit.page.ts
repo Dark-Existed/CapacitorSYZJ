@@ -17,7 +17,7 @@ export class EditPage implements OnInit {
   ) {
     activatedRoute.queryParams.subscribe(queryParms => {
       this.title = queryParms.title;
-      // this.property = queryParms.property;
+      this.property = queryParms.property;
     });
   }
 
