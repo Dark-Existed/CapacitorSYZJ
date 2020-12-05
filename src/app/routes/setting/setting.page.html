@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="返回"></ion-back-button>
     </ion-buttons>
-    <ion-title>店铺设置</ion-title>
+    <ion-title>设置</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,12 +11,12 @@
 <ion-content>
 
   <ion-list inset="true" lines="full">
-    <ion-item detail>
+    <ion-item detail [routerLink]="['/setting/shop-edit']">
       <ion-label>店铺设置</ion-label>
     </ion-item>
 
-    <ion-item detail>
-      <ion-label>密码</ion-label>
+    <ion-item detail [routerLink]="['/setting/change-password']">
+      <ion-label>修改密码</ion-label>
     </ion-item>
 
   </ion-list>
