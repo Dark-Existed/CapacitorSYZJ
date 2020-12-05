@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="返回"></ion-back-button>
     </ion-buttons>
-    <ion-title>店铺信息</ion-title>
+    <ion-title>店铺设置</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,38 +12,37 @@
 
   <ion-list inset="true" lines="full">
     <ion-item detail>
-      <ion-label>店铺名称</ion-label>
+      <ion-label>店铺设置</ion-label>
     </ion-item>
 
     <ion-item detail>
-      <ion-label>店铺简称</ion-label>
+      <ion-label>密码</ion-label>
     </ion-item>
 
-    <ion-item>
-      <ion-label>注册时间</ion-label>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>手机号码</ion-label>
-      <ion-note slot="end">15960033388</ion-note>
-    </ion-item>
   </ion-list>
 
   <ion-list inset="true" lines="full">
+    <ion-item detail>
+      <ion-label>关于我们</ion-label>
+    </ion-item>
+
     <ion-item>
-      <ion-label>电子邮件</ion-label>
+      <ion-label>联系客服</ion-label>
+      <ion-note style="align-self: center; font-size: 13px; font-weight: bold; color: #629ad9;">
+        {{ appConfig.phone }}
+      </ion-note>
     </ion-item>
 
     <ion-item detail>
-      <ion-label>店主姓名</ion-label>
+      <ion-label>版本号:  {{ appConfig.version }}</ion-label>
+      <ion-note style="align-self: center; font-size: 13px;">检测更新</ion-note>
     </ion-item>
 
-    <ion-item detail>
-      <ion-label>店铺电话</ion-label>
-    </ion-item>
+  </ion-list>
 
+  <ion-list inset="true" lines="full">
     <ion-item detail>
-      <ion-label>行业类型</ion-label>
+      <ion-label>安全退出</ion-label>
     </ion-item>
   </ion-list>
 

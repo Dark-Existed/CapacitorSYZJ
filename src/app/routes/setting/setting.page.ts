@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { APP_KEY, LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
 @Component({
   selector: 'app-setting',
@@ -7,7 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingPage implements OnInit {
 
-  constructor() { }
+  appConfig: any;
+
+  constructor(
+    private localStorageService: LocalStorageService
+  ) {
+    this.appConfig = this.localStorageService.get(APP_KEY, {
+      isLaunched: false,
+      version: '1.3.4',
+      phone: '13315168184'
+    });
+  }
 
   ngOnInit() {
   }
