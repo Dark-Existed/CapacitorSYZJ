@@ -13,8 +13,8 @@ const routes: Routes = [
     loadChildren: () => import('./change-password/change-password.module').then( m => m.ChangePasswordPageModule)
   },
   {
-    path: 'shop-edit',
-    loadChildren: () => import('./shop-edit/shop-edit.module').then( m => m.ShopEditPageModule)
+    path: 'shop',
+    loadChildren: () => import('./shop/shop.module').then( m => m.ShopPageModule)
   }
 ];
 

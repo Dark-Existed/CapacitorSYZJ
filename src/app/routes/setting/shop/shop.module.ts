@@ -4,16 +4,16 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ShopEditPageRoutingModule } from './shop-edit-routing.module';
+import { ShopPageRoutingModule } from './shop-routing.module';
 
-import { ShopEditPage } from './shop-edit.page';
+import { ShopPage } from './shop.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
     SharedModule,
-    ShopEditPageRoutingModule
+    ShopPageRoutingModule
   ],
-  declarations: [ShopEditPage]
+  declarations: [ShopPage]
 })
-export class ShopEditPageModule {}
+export class ShopPageModule {}

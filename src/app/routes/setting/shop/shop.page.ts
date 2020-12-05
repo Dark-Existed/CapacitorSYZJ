@@ -4,11 +4,11 @@ import { User } from 'src/app/shared/class/user';
 import { PassportServiceService } from 'src/app/shared/services/passport-service.service';
 
 @Component({
-  selector: 'app-shop-edit',
-  templateUrl: './shop-edit.page.html',
-  styleUrls: ['./shop-edit.page.scss'],
+  selector: 'app-shop',
+  templateUrl: './shop.page.html',
+  styleUrls: ['./shop.page.scss'],
 })
-export class ShopEditPage implements OnInit {
+export class ShopPage implements OnInit {
 
   currentUser: CurrentUser;
   user: User;
