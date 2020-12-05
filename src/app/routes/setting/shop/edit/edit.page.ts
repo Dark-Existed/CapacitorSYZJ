@@ -27,7 +27,7 @@ export class EditPage implements OnInit {
   }
 
   onSave() {
-    
+    this.settingService.updateParams(this.value, this.property);
   }
 
 }

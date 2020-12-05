@@ -9,11 +9,11 @@
 
 <ion-content>
   <ion-list>
-    <form (ngSubmit)="onSave">
+    <form (ngSubmit)="onSave()">
       <ion-item lines="none">
         <ion-col>
           <ion-label>{{ title }}</ion-label>
-          <ion-input type="text" placeholder="{{ title }}"></ion-input>
+          <ion-input type="text" name="value" placeholder="{{ title }}" [(ngModel)]="value"></ion-input>
         </ion-col>
       </ion-item>
 
