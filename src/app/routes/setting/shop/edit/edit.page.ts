@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditPage implements OnInit {
 
-  constructor() { }
+  title: string;
+  property: string;
+  value: string;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+  ) {
+    activatedRoute.queryParams.subscribe(queryParms => {
+      this.property = queryParms.property;
+      this.title = queryParms.title;
+    });
+  }
 
   ngOnInit() {
+  }
+
+  onSave() {
+
   }
 
 }

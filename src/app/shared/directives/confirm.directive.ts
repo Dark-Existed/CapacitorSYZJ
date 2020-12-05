@@ -4,9 +4,14 @@ import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator, ValidatorF
 @Directive({
   selector: '[appConfirm]',
   providers: [
-    { provide: NG_VALIDATORS, useExisting: ConfirmDirective, multi: true }
+    {
+      provide: NG_VALIDATORS,
+      useExisting: ConfirmDirective,
+      multi: true
+    }
   ]
 })
+
 export class ConfirmDirective implements Validator {
 
   constructor() { }
@@ -17,7 +22,6 @@ export class ConfirmDirective implements Validator {
   // registerOnValidatorChange?(fn: () => void): void {
   //   throw new Error('Method not implemented.');
   // }
-
 
 }
 
