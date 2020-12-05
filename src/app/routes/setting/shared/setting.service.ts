@@ -37,6 +37,7 @@ export class SettingService {
     for (const u of users) {
       if (u.id === this.user.id) {
         u[parmsName] = value;
+        break;
       }
     }
     this.localStorageService.set(USERS_KEY, users);
@@ -47,6 +48,7 @@ export class SettingService {
     for (const s of shops) {
       if (s.id === this.shop.id) {
         s[parmsName] = value;
+        break;
       }
     }
     this.localStorageService.set(SHOPS_KEY, shops);

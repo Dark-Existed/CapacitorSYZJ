@@ -30,9 +30,11 @@ export class EditPage implements OnInit {
   }
 
   onSave() {
-    this.settingService.updateParams(this.value, this.property);
-    this.outlet.pop(2);
-    this.router.navigateByUrl('/setting/shop');
+    if (this.value != null) {
+      this.settingService.updateParams(this.value, this.property);
+    }
+    this.outlet.pop(1);
+    // this.router.navigateByUrl('/setting/shop');
   }
 
 }
