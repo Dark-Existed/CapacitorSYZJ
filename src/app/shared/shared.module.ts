@@ -27,6 +27,7 @@ import { ConfirmDirective } from './directives/confirm.directive';
     CommonModule,
     FormsModule,
     IonicModule,
+    ConfirmDirective,
     CopyrightComponent
   ]
 })

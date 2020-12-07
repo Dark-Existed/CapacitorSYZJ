@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChangePasswordPage implements OnInit {
 
-  oldPassword: string;
-  newPassword: string;
-  confirmPassword: string;
+  passwordConfig = {
+    oldPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  };
 
   constructor() { }
 

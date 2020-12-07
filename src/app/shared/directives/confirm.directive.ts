@@ -1,4 +1,4 @@
-import { Directive } from '@angular/core';
+import { Directive, Input } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
 
 @Directive({
@@ -14,10 +14,16 @@ import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator, ValidatorF
 
 export class ConfirmDirective implements Validator {
 
+  @Input('appConfirm') confirm: string;
+
   constructor() { }
 
   validate(control: AbstractControl): ValidationErrors {
-    throw new Error('Method not implemented.');
+    if (this.confirm == null) {
+      return null;
+    } else {
+      return confirmValidator(this.confirm)(control);
+    }
   }
   // registerOnValidatorChange?(fn: () => void): void {
   //   throw new Error('Method not implemented.');
