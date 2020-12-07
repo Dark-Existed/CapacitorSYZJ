@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { CurrentUser } from 'src/app/shared/class/current-user';
 import { User } from 'src/app/shared/class/user';
 import { PassportServiceService } from 'src/app/shared/services/passport-service.service';
@@ -15,12 +16,24 @@ export class ShopPage implements OnInit {
 
   constructor(
     private passportService: PassportServiceService,
+    private router: Router,
   ) {
-    this.currentUser = passportService.getCueerntUser();
-    this.user = passportService.getUser(this.currentUser.id);
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        if (event.url === '/setting/shop') {
+          this.updateData();
+        }
+      }
+    });
   }
 
   ngOnInit() {
+    this.updateData();
+  }
+
+  updateData() {
+    this.currentUser = this.passportService.getCueerntUser();
+    this.user = this.passportService.getUser(this.currentUser.id);
   }
 
 }
