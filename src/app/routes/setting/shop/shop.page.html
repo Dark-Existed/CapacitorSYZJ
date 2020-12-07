@@ -13,10 +13,12 @@
   <ion-list inset="true" lines="full">
     <ion-item detail [routerLink]="['/setting/shop/edit']" [queryParams]="{title: '店铺名称', property:'Shop.shopName'}">
       <ion-label>店铺名称</ion-label>
+      <ion-note style="align-self: center; font-size: 13px;">{{ shop.shopName }}</ion-note>
     </ion-item>
 
     <ion-item detail [routerLink]="['/setting/shop/edit']" [queryParams]="{title: '店铺简称', property:'Shop.shortName'}">
       <ion-label>店铺简称</ion-label>
+      <ion-note style="align-self: center; font-size: 13px;">{{ shop.shortName }}</ion-note>
     </ion-item>
 
     <ion-item>
@@ -39,14 +41,17 @@
 
     <ion-item detail [routerLink]="['/setting/shop/edit']" [queryParams]="{title: '店主姓名', property:'User.userName'}">
       <ion-label>店主姓名</ion-label>
+      <ion-note style="align-self: center; font-size: 13px;">{{ user.userName }}</ion-note>
     </ion-item>
 
     <ion-item detail [routerLink]="['/setting/shop/edit']" [queryParams]="{title: '店铺电话', property:'Shop.shopTel'}">
       <ion-label>店铺电话</ion-label>
+      <ion-note style="align-self: center; font-size: 13px;">{{ shop.shopTel }}</ion-note>
     </ion-item>
 
     <ion-item detail [routerLink]="['/setting/shop/edit']" [queryParams]="{title: '行业类型', property:'Shop.shopType'}">
       <ion-label>行业类型</ion-label>
+      <ion-note style="align-self: center; font-size: 13px;">{{ shop.shopType }}</ion-note>
     </ion-item>
   </ion-list>
 

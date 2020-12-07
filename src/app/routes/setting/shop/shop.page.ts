@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { CurrentUser } from 'src/app/shared/class/current-user';
+import { Shop } from 'src/app/shared/class/shop';
 import { User } from 'src/app/shared/class/user';
 import { PassportServiceService } from 'src/app/shared/services/passport-service.service';
 
@@ -13,6 +14,7 @@ export class ShopPage implements OnInit {
 
   currentUser: CurrentUser;
   user: User;
+  shop: Shop;
 
   constructor(
     private passportService: PassportServiceService,
@@ -34,6 +36,7 @@ export class ShopPage implements OnInit {
   updateData() {
     this.currentUser = this.passportService.getCueerntUser();
     this.user = this.passportService.getUser(this.currentUser.id);
+    this.shop = this.passportService.getShop(this.user.shopId);
   }
 
 }
