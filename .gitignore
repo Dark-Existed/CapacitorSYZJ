@@ -30,3 +30,4 @@ npm-debug.log*
 /plugins
 /www
 src/app/shared/config
+src/app/routes/setting/about-us
