@@ -1,11 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <!-- <ion-back-button text="返回" default-href="default" (click)="onBack()"></ion-back-button> -->
-      <ion-icon slot="strat" name="arrow-back-outline"></ion-icon>
-      <ion-button (click)="onBack()" expand="block" fill="clear" shape="round">
-        返回
-      </ion-button>
+      <ion-back-button text="返回"></ion-back-button>
     </ion-buttons>
     <ion-title>设置</ion-title>
   </ion-toolbar>
@@ -26,7 +22,7 @@
   </ion-list>
 
   <ion-list inset="true" lines="full">
-    <ion-item detail>
+    <ion-item detail [routerLink]="['/setting/about-us']">
       <ion-label>关于我们</ion-label>
     </ion-item>
 
