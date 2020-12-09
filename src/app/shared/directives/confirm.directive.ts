@@ -25,9 +25,6 @@ export class ConfirmDirective implements Validator {
       return confirmValidator(this.confirm)(control);
     }
   }
-  // registerOnValidatorChange?(fn: () => void): void {
-  //   throw new Error('Method not implemented.');
-  // }
 
 }
 
