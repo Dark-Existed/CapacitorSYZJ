@@ -1,12 +1,18 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons>
-      <ion-back-button text="返回" color=""></ion-back-button>
+    <ion-buttons slot="start">
+      <ion-back-button text="返回"></ion-back-button>
     </ion-buttons>
-    <ion-title text-center>{{ headTitle }}</ion-title>
+    <ion-title>{{ headTitle }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-item-divider>
+    <div>{{title}}</div>
+    <div *ngIf="title == '大分类'" slot="end">
+      <ion-input name="{{ title }}" [(ngModel)]="name" type="text" required placeholder="商品大分类名称"></ion-input>
+    </div>
+  </ion-item-divider>
 
 </ion-content>

@@ -24,7 +24,6 @@ export class CategoryListPage implements OnInit {
             if (this.categories) {
                 this.activateCategory = this.categories[0];
                 this.activateSubCategories = this.activateCategory.children;
-                console.log(this.activateSubCategories.length);
             }
         });
     }
@@ -35,7 +34,6 @@ export class CategoryListPage implements OnInit {
     onSelectedCategory(category: Category) {
         this.activateCategory = category;
         this.activateSubCategories = this.activateCategory.children;
-        // console.log(this.activateSubCategories.length);
     }
 
     onSelectedSubCategory(category: Category) {

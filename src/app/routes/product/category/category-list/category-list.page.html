@@ -4,7 +4,8 @@
       <ion-back-button text="商品列表"></ion-back-button>
     </ion-buttons>
     <ion-title>商品分类</ion-title>
-    <ion-icon name="add-outline" slot="end" style="height: 24px; width: 24px; margin-right: 16px;"></ion-icon>
+    <ion-icon name="add-outline" slot="end" style="height: 24px; width: 24px; margin-right: 16px;"
+      [routerLink]="['/category/category-add']" [queryParams]="{title: '大分类'}"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -32,14 +33,15 @@
           <ion-item>
             <ion-label>小分类</ion-label>
           </ion-item>
-          <ion-item (click)="onSelect(activeCategory)" href="">
+          <ion-item (click)="onSelect(activeCategory)">
             <ion-label>无小分类进入大分类</ion-label>
           </ion-item>
-          <ion-item *ngFor="let category of activateSubCategories" (click)="onSelectedSubCategory(category)" href="">
+          <ion-item *ngFor="let category of activateSubCategories" (click)="onSelectedSubCategory(category)">
             <ion-label>{{ category.name }}</ion-label>
           </ion-item>
 
-          <ion-item lines="none">
+          <ion-item lines="none" [routerLink]="['/category/category-add']"
+            [queryParams]="{title: activeCategory?.name, id: activeCategory?.id}">
             <ion-text color="primary">
               <ion-icon name="add-circle-outline"></ion-icon>
               新增小分类
