@@ -1,4 +1,4 @@
-import { Category } from './category'
+import { Category } from './category';
 export const CATEGORIES: Category[] = [
     {
         id: 1,

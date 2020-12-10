@@ -11,12 +11,18 @@
 <ion-content>
   <ion-grid class="ion-no-padding">
     <ion-row class="ion-no-padding ion-align-items-stretch">
-      
+
       <ion-col size="5" class="ion-no-padding" left>
         <ion-list>
           <ion-item lines="full" color="light">
             <ion-label>大分类</ion-label>
           </ion-item>
+
+          <ion-item *ngFor="let category of categories" (click)="onSelectedCategory(category)"
+            [ngClass]="{'item-active': category.id === activateCategory.id}">
+            <ion-label>{{ category.name }}</ion-label>
+          </ion-item>
+
         </ion-list>
       </ion-col>
 
@@ -24,6 +30,14 @@
         <ion-list>
           <ion-item>
             <ion-label>小分类</ion-label>
+          </ion-item>
+
+          <ion-item (click)="onSelect(activeCategory)" href="">
+            <ion-label>无小分类进入大分类</ion-label>
+          </ion-item>
+
+          <ion-item *ngFor="let category of activateSubCategories" (click)="onSelectedSubCategory(category)" href="">
+            <ion-label>{{ category.name }}</ion-label>
           </ion-item>
 
           <ion-item lines="none">
@@ -36,6 +50,11 @@
 
         <ion-list class="list-footer" lines="none" no-margin >
           <ion-item>
+
+            <ion-text *ngIf="activateSubCategories?.length === 0" lines="none">暂无没有小分类</ion-text>
+            <ion-text *ngIf="activateSubCategories?.length !== 0 " lines="none">
+              共{{ activateSubCategories?.length }}种商品分类
+            </ion-text>
             <ion-buttons slot="end">
               <ion-button (click)="onPresentActionSheet()" expend="clear">
                 <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
