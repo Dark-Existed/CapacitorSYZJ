@@ -10,13 +10,6 @@ ion-grid {
     }
 }
 
-.list-footer {
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    left: 0px;
-}
-
 .item-active {
     border-left-color: var(--ion-color-primary);
     border-left-width: 4px;

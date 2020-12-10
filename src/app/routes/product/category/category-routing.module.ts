@@ -11,6 +11,18 @@ const routes: Routes = [
   {
     path: 'category-list',
     loadChildren: () => import('./category-list/category-list.module').then( m => m.CategoryListPageModule)
+  },
+  {
+    path: 'category-add',
+    loadChildren: () => import('./category-add/category-add.module').then( m => m.CategoryAddPageModule)
+  },
+  {
+    path: 'category-edit',
+    loadChildren: () => import('./category-edit/category-edit.module').then( m => m.CategoryEditPageModule)
+  },
+  {
+    path: 'category-name-edit',
+    loadChildren: () => import('./category-name-edit/category-name-edit.module').then( m => m.CategoryNameEditPageModule)
   }
 ];
 
