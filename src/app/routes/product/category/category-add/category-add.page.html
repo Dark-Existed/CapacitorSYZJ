@@ -19,6 +19,12 @@
       <ion-input name="catName" type="text" required placeholder="商品大分类名称"></ion-input>
     </ion-item-divider>
 
+    <!-- <ion-item-divider *ngFor="let c of category?.children" style="margin-bottom: 15px;">
+      <ion-label position="fixed">小分类</ion-label>
+      <ion-input name="category.children{{c.id}}" type="text" required placeholder="商品小分类名称" [(ngModel)]="c.name">
+      </ion-input>
+    </ion-item-divider> -->
+
   </ion-list>
 
 </ion-content>

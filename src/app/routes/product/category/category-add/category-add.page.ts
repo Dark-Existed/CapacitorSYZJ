@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { title } from 'process';
 import { Category } from '../category';
 import { CategoryService } from '../category.service';
 
@@ -11,7 +12,7 @@ import { CategoryService } from '../category.service';
 export class CategoryAddPage implements OnInit {
 
   private headTitle: string;
-  private title: string;
+  private categoryName: string;
   private id: number;
   private name: string;
   private category: Category;
@@ -21,16 +22,16 @@ export class CategoryAddPage implements OnInit {
     private categoryService: CategoryService,
   ) {
     activatedRouter.queryParams.subscribe(queryParms => {
-      this.title = queryParms.title;
+      this.categoryName = queryParms.name;
       this.id = Number(queryParms.id);
     });
 
-    if (this.title !== '大分类') {
+    if (this.categoryName !== '大分类') {
       this.headTitle = '新增小分类';
     } else {
       this.headTitle = '新增分类';
     }
-
+    categoryService.initCategory(this.id, this.categoryName);
   }
 
   ngOnInit() {

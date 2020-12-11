@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>商品分类</ion-title>
     <ion-icon name="add-outline" slot="end" style="height: 24px; width: 24px; margin-right: 16px;"
-      [routerLink]="['/category/category-add']" [queryParams]="{title: '大分类'}"></ion-icon>
+      [routerLink]="['/category/category-add']" [queryParams]="{name: '大分类', id: 0}"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -41,7 +41,7 @@
           </ion-item>
 
           <ion-item lines="none" [routerLink]="['/category/category-add']"
-            [queryParams]="{title: activateCategory?.name, id: activateCategory?.id}">
+            [queryParams]="{name: activateCategory?.name, id: activateCategory?.id}">
             <ion-text color="primary">
               <ion-icon name="add-circle-outline"></ion-icon>
               新增小分类
