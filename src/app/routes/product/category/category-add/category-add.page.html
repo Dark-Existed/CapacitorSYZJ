@@ -7,24 +7,32 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="light">
+  <form (ngSubmit)="onSave()" #categoryaddForm="ngForm" novalidate>
+    <ion-list style="padding: 0%;">
+      <ion-item-divider *ngIf="categoryName !== '大分类'" color="light">
+        <ion-label>{{ category.name }}</ion-label>
+      </ion-item-divider>
 
-  <ion-list style="padding: 0%;">
-    <ion-item-divider *ngIf="title !== '大分类'" color="light">
-      <ion-label>{{ title }}</ion-label>
-    </ion-item-divider>
+      <ion-item-divider *ngIf="categoryName == '大分类'" style="margin-top: 16px;">
+        <ion-label position="fixed">大分类</ion-label>
+        <ion-input name="catName" type="text" required placeholder="商品大分类名称"></ion-input>
+      </ion-item-divider>
 
-    <ion-item-divider *ngIf="title == '大分类'" style="margin-bottom: 15px;">
-      <ion-label position="fixed">大分类</ion-label>
-      <ion-input name="catName" type="text" required placeholder="商品大分类名称"></ion-input>
-    </ion-item-divider>
+      <ion-item-divider *ngFor="let c of category?.children" style="margin-top: 16px;">
+        <ion-label position="fixed">小分类</ion-label>
+        <ion-input name="category.children{{c.id}}" type="text" required placeholder="商品小分类名称" [(ngModel)]="c.name">
+        </ion-input>
+      </ion-item-divider>
 
-    <!-- <ion-item-divider *ngFor="let c of category?.children" style="margin-bottom: 15px;">
-      <ion-label position="fixed">小分类</ion-label>
-      <ion-input name="category.children{{c.id}}" type="text" required placeholder="商品小分类名称" [(ngModel)]="c.name">
-      </ion-input>
-    </ion-item-divider> -->
+      <ion-item lines="none" (click)="onAddSubCategory()" color="light">
+        <ion-icon slot="start" name='add-circle' color="primary" style="margin-right: 12px;"></ion-icon>
+        <ion-label color="primary">新增小分类</ion-label>
+      </ion-item>
 
-  </ion-list>
+    </ion-list>
+  </form>
+
+  <ion-button type="submit" expand="full" color="primary" [disabled]="categoryaddForm.invalid">保存</ion-button>
 
 </ion-content>

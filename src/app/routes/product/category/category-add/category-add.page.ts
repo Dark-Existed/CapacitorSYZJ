@@ -13,7 +13,7 @@ export class CategoryAddPage implements OnInit {
 
   private headTitle: string;
   private categoryName: string;
-  private id: number;
+  private id = 0;
   private name: string;
   private category: Category;
 
@@ -24,17 +24,22 @@ export class CategoryAddPage implements OnInit {
     activatedRouter.queryParams.subscribe(queryParms => {
       this.categoryName = queryParms.name;
       this.id = Number(queryParms.id);
+      this.category = categoryService.initCategory(this.id, this.categoryName);
+      if (this.categoryName !== '大分类') {
+        this.headTitle = '新增小分类';
+      } else {
+        this.headTitle = '新增分类';
+      }
     });
-
-    if (this.categoryName !== '大分类') {
-      this.headTitle = '新增小分类';
-    } else {
-      this.headTitle = '新增分类';
-    }
-    categoryService.initCategory(this.id, this.categoryName);
   }
 
   ngOnInit() {
   }
+
+  onAddSubCategory() {
+
+  }
+
+  onSave() { }
 
 }

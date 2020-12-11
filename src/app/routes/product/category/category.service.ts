@@ -23,7 +23,7 @@ export class CategoryService {
     const category = new Category();
     const childCategory = new Category();
     if (id === 0) {
-      category.id = this.getCategoryLength();
+      category.id = this.getCategoryLength() + 1;
       category.name = '';
       category.children = [];
       childCategory.id = category.id * 10 + 1;
@@ -43,13 +43,13 @@ export class CategoryService {
   }
 
   getCategoryLength(): number {
-    const categotyList = this.localStorageService.get(CATEGORY_KEY, []);
+    const categotyList = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
     return categotyList.length;
   }
 
   getSubCategoryLength(id: number): number {
-    const categotyList: Category[] = this.localStorageService.get(CATEGORY_KEY, []);
-    return categotyList[id].children.length;
+    const categotyList: Category[] = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+    return categotyList[id - 1].children.length;
   }
 
   updateCategories(caterories: Category[]) {
