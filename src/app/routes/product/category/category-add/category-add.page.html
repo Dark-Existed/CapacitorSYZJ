@@ -16,7 +16,7 @@
 
       <ion-item-divider *ngIf="categoryName == '大分类'" style="margin-top: 16px;">
         <ion-label position="fixed">大分类</ion-label>
-        <ion-input name="catName" type="text" required placeholder="商品大分类名称"></ion-input>
+        <ion-input name="catName" type="text" required placeholder="商品大分类名称" [(ngModel)]="category.name"></ion-input>
       </ion-item-divider>
 
       <ion-item-divider *ngFor="let c of category?.children" style="margin-top: 16px;">

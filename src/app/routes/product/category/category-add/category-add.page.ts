@@ -37,7 +37,11 @@ export class CategoryAddPage implements OnInit {
   }
 
   onAddSubCategory() {
-
+    const childCategory = new Category();
+    childCategory.id = this.category.children[this.category.children.length - 1].id + 1;
+    childCategory.name = '';
+    childCategory.children = [];
+    this.category.children.push(childCategory);
   }
 
   onSave() { }
