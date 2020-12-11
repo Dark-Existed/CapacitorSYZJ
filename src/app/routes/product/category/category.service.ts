@@ -56,4 +56,56 @@ export class CategoryService {
     this.localStorageService.set(CATEGORY_KEY, caterories);
   }
 
+  getCategory(id: number) {
+    const categotyList: Category[] = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+    for (const caterory of categotyList) {
+      if (caterory.id === id) {
+        return caterory;
+      }
+    }
+    return null;
+  }
+
+  async isUniqueName(category: Category) {
+    const categotyList: Category[] = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+    if (category.name.match(/^\s*$/)) {
+      return new AjaxResult(false, null, {
+        message: '大类名不能为空',
+        details: null
+      });
+    }
+    for (const c of categotyList) {
+      if (category.name === c.name) {
+        return new AjaxResult(false, null, {
+          message: '该大类名已存在',
+          details: null
+        });
+      }
+    }
+    return new AjaxResult(true, null);
+  }
+
+  async isUniqueChildName(category: Category): Promise<AjaxResult> {
+    const categoryLocal = this.getCategory(category.id);
+    for (const c of category.children) {
+      if (c.name.match(/^\s*$/)) {
+        return new AjaxResult(false, null, {
+          message: '存在空白小类名，请重新输入',
+          details: ''
+        });
+      }
+    }
+    for (const cl of categoryLocal.children) {
+      for (const c of category.children) {
+        if (c.name === cl.name) {
+          return new AjaxResult(false, null, {
+            message: '小类名存在重复',
+            details: null
+          });
+        }
+      }
+    }
+    return new AjaxResult(true, null);
+  }
+
 }

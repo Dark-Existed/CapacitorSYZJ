@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { title } from 'process';
 import { Category } from '../category';
 import { CategoryService } from '../category.service';
@@ -20,6 +21,7 @@ export class CategoryAddPage implements OnInit {
   constructor(
     private activatedRouter: ActivatedRoute,
     private categoryService: CategoryService,
+    private toastController: ToastController,
   ) {
     activatedRouter.queryParams.subscribe(queryParms => {
       this.categoryName = queryParms.name;
@@ -44,6 +46,9 @@ export class CategoryAddPage implements OnInit {
     this.category.children.push(childCategory);
   }
 
-  onSave() { }
+  async onSave() {
+    const toast = await this.toastController.create({ duration: 2000 });
+
+  }
 
 }

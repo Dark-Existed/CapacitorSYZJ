@@ -41,4 +41,4 @@ export const CATEGORIES: Category[] = [
         name: '默认类别',
         children: []
     }
-]
+];
