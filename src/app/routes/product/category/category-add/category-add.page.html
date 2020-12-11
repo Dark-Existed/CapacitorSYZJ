@@ -8,11 +8,17 @@
 </ion-header>
 
 <ion-content>
-  <ion-item-divider>
-    <div>{{title}}</div>
-    <div *ngIf="title == '大分类'" slot="end">
-      <ion-input name="{{ title }}" [(ngModel)]="name" type="text" required placeholder="商品大分类名称"></ion-input>
-    </div>
-  </ion-item-divider>
+
+  <ion-list style="padding: 0%;">
+    <ion-item-divider *ngIf="title !== '大分类'" color="light">
+      <ion-label>{{ title }}</ion-label>
+    </ion-item-divider>
+
+    <ion-item-divider *ngIf="title == '大分类'" style="margin-bottom: 15px;">
+      <ion-label position="fixed">大分类</ion-label>
+      <ion-input name="catName" type="text" required placeholder="商品大分类名称"></ion-input>
+    </ion-item-divider>
+
+  </ion-list>
 
 </ion-content>

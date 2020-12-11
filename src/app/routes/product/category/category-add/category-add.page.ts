@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Category } from '../category';
 import { CategoryService } from '../category.service';
 
 @Component({
@@ -13,6 +14,7 @@ export class CategoryAddPage implements OnInit {
   private title: string;
   private id: number;
   private name: string;
+  private category: Category;
 
   constructor(
     private activatedRouter: ActivatedRoute,
@@ -21,12 +23,13 @@ export class CategoryAddPage implements OnInit {
     activatedRouter.queryParams.subscribe(queryParms => {
       this.title = queryParms.title;
       this.id = Number(queryParms.id);
-      if (this.title !== '大分类') {
-        this.headTitle = '新增小分类';
-      } else {
-        this.headTitle = '新增商品分类';
-      }
     });
+
+    if (this.title !== '大分类') {
+      this.headTitle = '新增小分类';
+    } else {
+      this.headTitle = '新增分类';
+    }
 
   }
 

@@ -37,7 +37,7 @@ export class CategoryListPage implements OnInit {
     }
 
     onSelectedSubCategory(category: Category) {
-        this.activateCategory = category;
+
     }
 
     async onPresentActionSheet() {
