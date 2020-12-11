@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content color="light">
-  <form (ngSubmit)="onSave()" #categoryaddForm="ngForm" novalidate>
+  <form (ngSubmit)="onSave()" #categoryForm="ngForm">
     <ion-list style="padding: 0%;">
       <ion-item-divider *ngIf="categoryName !== '大分类'" color="light">
         <ion-label>{{ category.name }}</ion-label>
@@ -31,8 +31,9 @@
       </ion-item>
 
     </ion-list>
+
+    <ion-button type="submit" expand="full" color="primary" [disabled]="categoryForm.invalid">保存</ion-button>
   </form>
 
-  <ion-button type="submit" expand="full" color="primary" [disabled]="categoryaddForm.invalid">保存</ion-button>
 
 </ion-content>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Form } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IonRouterOutlet, ToastController } from '@ionic/angular';
 import { Category } from '../category';
@@ -51,7 +52,7 @@ export class CategoryAddPage implements OnInit {
     if (this.id === 0) {
       this.categoryService.isUniqueName(this.category).then((res) => {
         if (res.success) {
-          
+          this.categoryService.insertCategory(this.category);
           toast.message = '新增分类成功';
           toast.present();
           this.outlet.pop(1);
@@ -63,7 +64,7 @@ export class CategoryAddPage implements OnInit {
     } else {
       this.categoryService.isUniqueChildName(this.category).then((res) => {
         if (res.success) {
-
+          this.categoryService.insertCategory(this.category);
           toast.message = '新增小分类成功';
           toast.present();
           this.outlet.pop(1);
