@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastController } from '@ionic/angular';
-import { title } from 'process';
+import { IonRouterOutlet, ToastController } from '@ionic/angular';
 import { Category } from '../category';
 import { CategoryService } from '../category.service';
 
@@ -14,7 +13,7 @@ export class CategoryAddPage implements OnInit {
 
   private headTitle: string;
   private categoryName: string;
-  private id = 0;
+  private id: number;
   private name: string;
   private category: Category;
 
@@ -22,6 +21,7 @@ export class CategoryAddPage implements OnInit {
     private activatedRouter: ActivatedRoute,
     private categoryService: CategoryService,
     private toastController: ToastController,
+    private outlet: IonRouterOutlet,
   ) {
     activatedRouter.queryParams.subscribe(queryParms => {
       this.categoryName = queryParms.name;
@@ -48,7 +48,31 @@ export class CategoryAddPage implements OnInit {
 
   async onSave() {
     const toast = await this.toastController.create({ duration: 2000 });
+    if (this.id === 0) {
+      this.categoryService.isUniqueName(this.category).then((res) => {
+        if (res.success) {
+          
+          toast.message = '新增分类成功';
+          toast.present();
+          this.outlet.pop(1);
+        } else {
+          toast.message = res.error.message;
+          toast.present();
+        }
+      });
+    } else {
+      this.categoryService.isUniqueChildName(this.category).then((res) => {
+        if (res.success) {
 
+          toast.message = '新增小分类成功';
+          toast.present();
+          this.outlet.pop(1);
+        } else {
+          toast.message = res.error.message;
+          toast.present();
+        }
+      });
+    }
   }
 
 }

@@ -43,13 +43,13 @@ export class CategoryService {
   }
 
   getCategoryLength(): number {
-    const categotyList = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
-    return categotyList.length;
+    const categoryList = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+    return categoryList.length;
   }
 
   getSubCategoryLength(id: number): number {
-    const categotyList: Category[] = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
-    return categotyList[id - 1].children.length;
+    const categoryList: Category[] = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+    return categoryList[id - 1].children.length;
   }
 
   updateCategories(caterories: Category[]) {
@@ -67,14 +67,14 @@ export class CategoryService {
   }
 
   async isUniqueName(category: Category) {
-    const categotyList: Category[] = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+    const categoryList: Category[] = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
     if (category.name.match(/^\s*$/)) {
       return new AjaxResult(false, null, {
         message: '大类名不能为空',
         details: null
       });
     }
-    for (const c of categotyList) {
+    for (const c of categoryList) {
       if (category.name === c.name) {
         return new AjaxResult(false, null, {
           message: '该大类名已存在',
@@ -106,6 +106,28 @@ export class CategoryService {
       }
     }
     return new AjaxResult(true, null);
+  }
+
+  isIdExisted(category: Category) {
+    const categories: Category[] = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+    for (const c of categories) {
+      if (c.id === category.id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  insertCategory(category: Category) {
+    const categories: Category[] = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+    if (this.isIdExisted(category)) {
+      console.log(category.id);
+      console.log(categories[category.id - 1].id);
+      categories[category.id - 1].children = categories[category.id - 1].children.concat(category.children);
+    } else {
+      categories.push(category);
+    }
+    this.localStorageService.set(CATEGORY_KEY, categories);
   }
 
 }
