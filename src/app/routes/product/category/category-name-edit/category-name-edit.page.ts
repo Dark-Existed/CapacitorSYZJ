@@ -24,8 +24,8 @@ export class CategoryNameEditPage implements OnInit {
   ngOnInit() {
   }
 
-  dismiss(name?: string) {
-    this.modalController.dismiss(name);
+  dismiss(category?: Category) {
+    this.modalController.dismiss(category);
   }
 
   async onSave() {
