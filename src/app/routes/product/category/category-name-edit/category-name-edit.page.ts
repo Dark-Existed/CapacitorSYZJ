@@ -19,7 +19,6 @@ export class CategoryNameEditPage implements OnInit {
     private categoryService: CategoryService,
     private toastController: ToastController,
   ) {
-    // this.category = this.navParms.data.data;
     this.category = JSON.parse(JSON.stringify(this.navParms.data.data));
     this.parentId = this.navParms.data.parentId;
   }

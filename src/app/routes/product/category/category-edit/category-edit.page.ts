@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, IonItemSliding, ModalController } from '@ionic/angular';
 import { Category } from '../category';
 import { CategoryNameEditPage } from '../category-name-edit/category-name-edit.page';
@@ -15,6 +15,7 @@ export class CategoryEditPage implements OnInit {
   private category: Category;
 
   constructor(
+    private router: Router,
     private activatedRouter: ActivatedRoute,
     private categoryService: CategoryService,
     private alertController: AlertController,
@@ -48,8 +49,26 @@ export class CategoryEditPage implements OnInit {
     }
   }
 
-  onParentCategoryDelete(item: IonItemSliding) {
+  async onParentCategoryDelete(item: IonItemSliding) {
     item.close();
+    const alert = await this.alertController.create({
+      header: this.category.name,
+      message: '确定要删除此大分类？',
+      buttons: [
+        {
+          text: '取消',
+          role: 'cancel'
+        },
+        {
+          text: '确定',
+          handler: () => {
+            this.categoryService.deleteCategory(this.category);
+            // this.router.navigateByUrl('category/category-list');
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async onEditSubCategoryName(item: IonItemSliding, category: Category) {
@@ -60,9 +79,25 @@ export class CategoryEditPage implements OnInit {
     }
   }
 
-  onSubCategoryDelete(item: IonItemSliding, category: Category) {
+  async onSubCategoryDelete(item: IonItemSliding, category: Category) {
     item.close();
-
+    const alert = await this.alertController.create({
+      header: category.name,
+      message: '确定要删除此小分类？',
+      buttons: [
+        {
+          text: '取消',
+          role: 'cancel'
+        },
+        {
+          text: '确定',
+          handler: () => {
+            this.categoryService.deleteSubCategory(category, this.category);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
 }

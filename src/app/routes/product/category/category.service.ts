@@ -171,8 +171,31 @@ export class CategoryService {
     this.localStorageService.set(CATEGORY_KEY, categories);
   }
 
-  deleteCategory() { }
+  deleteCategory(caterogy: Category) {
+    let categories: Category[] = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+    categories = categories.filter((item) => item.id !== caterogy.id);
+    for (let index = 0; index < categories.length; index++) {
+      const c = categories[index];
+      c.id = index + 1;
+    }
+    for (const c of categories) {
+      for (let j = 0; j < c.children.length; j++) {
+        const cSub = c.children[j];
+        cSub.id = c.id * 10 + j + 1;
+      }
+    }
+    this.localStorageService.set(CATEGORY_KEY, categories);
+  }
 
-  deleteSubCategory() { }
+  deleteSubCategory(caterogy: Category, parentCategory: Category) {
+    const categories: Category[] = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+    parentCategory.children = parentCategory.children.filter(item => item.id !== caterogy.id);
+    for (let index = 0; index < parentCategory.children.length; index++) {
+      const c = parentCategory.children[index];
+      c.id = parentCategory.id * 10 + index + 1;
+    }
+    categories[parentCategory.id - 1] = parentCategory;
+    this.localStorageService.set(CATEGORY_KEY, categories);
+  }
 
 }
