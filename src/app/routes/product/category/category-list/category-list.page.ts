@@ -65,7 +65,13 @@ export class CategoryListPage implements OnInit {
         },
         {
           text: '编辑分类',
-          handler: () => { console.log('Archive clicked'); }
+          handler: () => {
+            this.router.navigate(['/category/category-edit'], {
+              queryParams: {
+                id: this.activateCategory.id,
+              }
+            });
+          }
         },
         {
           text: '取消',

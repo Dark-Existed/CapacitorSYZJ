@@ -1,9 +1,21 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>CategoryNameEdit</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title style="text-align: center;">
+      修改分类名称
+    </ion-title>
+    <ion-buttons slot="end" (click)="dismiss()">
+      <ion-icon name="close" slot="icon-only"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <form>
+    <ion-list>
+      <ion-item>
+        <ion-input name="categoryName" [(ngModel)]="category.name" type="text" placeholder="{{category.name}}"></ion-input>
+      </ion-item>
+      <ion-button expand="block" color="primary" (click)="onSave()">确定</ion-button>
+    </ion-list>
+  </form>
 </ion-content>

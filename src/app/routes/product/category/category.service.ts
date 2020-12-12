@@ -130,4 +130,12 @@ export class CategoryService {
     this.localStorageService.set(CATEGORY_KEY, categories);
   }
 
+  updateCategory(category: Category) {
+
+  }
+
+  updateSubCategory(category: Category) {
+
+  }
+
 }

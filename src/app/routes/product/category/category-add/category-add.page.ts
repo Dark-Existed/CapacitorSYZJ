@@ -24,7 +24,7 @@ export class CategoryAddPage implements OnInit {
     private toastController: ToastController,
     private outlet: IonRouterOutlet,
   ) {
-    activatedRouter.queryParams.subscribe(queryParms => {
+    this.activatedRouter.queryParams.subscribe(queryParms => {
       this.categoryName = queryParms.name;
       this.id = Number(queryParms.id);
       this.category = categoryService.initCategory(this.id, this.categoryName);

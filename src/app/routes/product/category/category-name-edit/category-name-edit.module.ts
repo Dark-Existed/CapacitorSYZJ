@@ -7,12 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { CategoryNameEditPageRoutingModule } from './category-name-edit-routing.module';
 
 import { CategoryNameEditPage } from './category-name-edit.page';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
+    SharedModule,
     CategoryNameEditPageRoutingModule
   ],
   declarations: [CategoryNameEditPage]

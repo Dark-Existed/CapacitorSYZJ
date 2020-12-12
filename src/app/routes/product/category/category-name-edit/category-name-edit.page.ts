@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController, NavParams, ToastController } from '@ionic/angular';
+import { Category } from '../category';
+import { CategoryService } from '../category.service';
 
 @Component({
   selector: 'app-category-name-edit',
@@ -7,9 +10,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoryNameEditPage implements OnInit {
 
-  constructor() { }
+  category: Category;
+
+  constructor(
+    private modalController: ModalController,
+    private navParms: NavParams,
+    private categoryService: CategoryService,
+    private toastController: ToastController,
+  ) {
+    this.category = navParms.data.value;
+  }
 
   ngOnInit() {
+  }
+
+  dismiss(name?: string) {
+    this.modalController.dismiss(name);
+  }
+
+  async onSave() {
+    const toast = await this.toastController.create({
+      duration: 2000,
+    });
+
   }
 
 }
