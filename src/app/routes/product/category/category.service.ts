@@ -1,4 +1,3 @@
-import { compileInjector } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { AjaxResult } from 'src/app/shared/class/ajax-result';
 import { CATEGORY_KEY, LocalStorageService } from 'src/app/shared/services/local-storage.service';
@@ -91,7 +90,7 @@ export class CategoryService {
       if (c.name.match(/^\s*$/)) {
         return new AjaxResult(false, null, {
           message: '存在空白小类名，请重新输入',
-          details: ''
+          details: null,
         });
       }
     }
@@ -103,6 +102,26 @@ export class CategoryService {
             details: null
           });
         }
+      }
+    }
+    return new AjaxResult(true, null);
+  }
+
+  async isUniqueSubName(category: Category, parentId: number): Promise<AjaxResult> {
+    if (category.name.match(/^\s*$/)) {
+      return new AjaxResult(false, null, {
+        message: '小类名不能为空',
+        details: null,
+      });
+    }
+    const categories: Category[] = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+    const categoryLocal = categories[parentId - 1];
+    for (const c of categoryLocal.children) {
+      if (category.id !== c.id && category.name === c.name) {
+        return new AjaxResult(false, null, {
+          message: '小类名存在重复',
+          details: null
+        });
       }
     }
     return new AjaxResult(true, null);
@@ -131,11 +150,29 @@ export class CategoryService {
   }
 
   updateCategory(category: Category) {
-
+    const categories: Category[] = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+    for (const c of categories) {
+      if (c.id === category.id) {
+        c.name = category.name;
+        break;
+      }
+    }
+    this.localStorageService.set(CATEGORY_KEY, categories);
   }
 
-  updateSubCategory(category: Category) {
-
+  updateSubCategory(category: Category, parentId: number) {
+    const categories: Category[] = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+    for (const c of categories[parentId - 1].children) {
+      if (c.id === category.id) {
+        c.name = category.name;
+        break;
+      }
+    }
+    this.localStorageService.set(CATEGORY_KEY, categories);
   }
+
+  deleteCategory() { }
+
+  deleteSubCategory() { }
 
 }

@@ -11,6 +11,7 @@ import { CategoryService } from '../category.service';
 export class CategoryNameEditPage implements OnInit {
 
   category: Category;
+  parentId: number;
 
   constructor(
     private modalController: ModalController,
@@ -18,7 +19,9 @@ export class CategoryNameEditPage implements OnInit {
     private categoryService: CategoryService,
     private toastController: ToastController,
   ) {
-    this.category = navParms.data.value;
+    // this.category = this.navParms.data.data;
+    this.category = JSON.parse(JSON.stringify(this.navParms.data.data));
+    this.parentId = this.navParms.data.parentId;
   }
 
   ngOnInit() {
@@ -32,7 +35,32 @@ export class CategoryNameEditPage implements OnInit {
     const toast = await this.toastController.create({
       duration: 2000,
     });
-
+    if (this.parentId) {
+      this.categoryService.isUniqueSubName(this.category, this.parentId).then((res) => {
+        if (res.success) {
+          this.categoryService.updateSubCategory(this.category, this.parentId);
+          toast.message = '修改成功';
+          toast.present();
+          this.dismiss(this.category);
+        } else {
+          toast.message = res.error.message;
+          toast.present();
+        }
+      });
+    } else {
+      this.categoryService.isUniqueName(this.category).then((res) => {
+        if (res.success) {
+          this.categoryService.updateCategory(this.category);
+          toast.message = '修改成功';
+          toast.present();
+          this.dismiss(this.category);
+        } else {
+          toast.message = res.error.message;
+          toast.present();
+        }
+      });
+    }
   }
+
 
 }

@@ -28,10 +28,13 @@ export class CategoryEditPage implements OnInit {
   ngOnInit() {
   }
 
-  async presentModal(category: Category) {
+  async presentModal(category: Category, parId: number | null = null) {
     const modal = await this.modalController.create({
       component: CategoryNameEditPage,
-      componentProps: { value: category }
+      componentProps: {
+        data: category,
+        parentId: parId,
+      }
     });
     await modal.present();
     return modal.onWillDismiss();
@@ -50,9 +53,8 @@ export class CategoryEditPage implements OnInit {
   }
 
   async onEditSubCategoryName(item: IonItemSliding, category: Category) {
-    console.log('2');
     item.close();
-    const res = await this.presentModal(category);
+    const res = await this.presentModal(category, this.category.id);
     if (res.data) {
       category = res.data;
     }
