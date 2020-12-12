@@ -13,6 +13,7 @@ export class CategoryListPage implements OnInit {
 
   private categories: Category[];
   private activateCategory: Category;
+  private activateCategoryId: number;
   private activateSubCategories: Category[];
   private activateSubCategory: Category;
 
@@ -21,6 +22,7 @@ export class CategoryListPage implements OnInit {
     private categoryService: CategoryService,
     private actionSheetController: ActionSheetController
   ) {
+    this.activateCategoryId = 1;
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (event.url === '/category/category-list') {
@@ -34,7 +36,7 @@ export class CategoryListPage implements OnInit {
     this.categoryService.getAll().then((data) => {
       this.categories = data.result;
       if (this.categories) {
-        this.activateCategory = this.categories[0];
+        this.activateCategory = this.categories[this.activateCategoryId - 1];
         this.activateSubCategories = this.activateCategory.children;
       }
     });
@@ -45,6 +47,7 @@ export class CategoryListPage implements OnInit {
 
   onSelectedCategory(category: Category) {
     this.activateCategory = category;
+    this.activateCategoryId = this.activateCategory.id;
     this.activateSubCategories = this.activateCategory.children;
   }
 
