@@ -39,25 +39,22 @@ export class CategoryEditPage implements OnInit {
 
   async onEditCategoryName(item: IonItemSliding) {
     item.close();
-    const data = await this.presentModal(this.category);
-    console.log(typeof data);
-    console.log(data);
-    if (data) {
-
+    const res = await this.presentModal(this.category);
+    if (res.data) {
+      this.category = res.data;
     }
   }
 
   onParentCategoryDelete(item: IonItemSliding) {
     item.close();
-
   }
 
   async onEditSubCategoryName(item: IonItemSliding, category: Category) {
     console.log('2');
     item.close();
-    const data = await this.presentModal(category);
-    if (data) {
-
+    const res = await this.presentModal(category);
+    if (res.data) {
+      category = res.data;
     }
   }
 
