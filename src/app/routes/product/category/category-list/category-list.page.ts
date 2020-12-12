@@ -60,7 +60,12 @@ export class CategoryListPage implements OnInit {
           text: '新增小分类',
           role: 'destructive',
           handler: () => {
-            console.log('Destructive clicked');
+            this.router.navigate(['/category/category-add'], {
+              queryParams: {
+                name: this.activateCategory.name,
+                id: this.activateCategory.id
+              }
+            });
           }
         },
         {

@@ -63,7 +63,7 @@ export class CategoryEditPage implements OnInit {
           text: '确定',
           handler: () => {
             this.categoryService.deleteCategory(this.category);
-            // this.router.navigateByUrl('category/category-list');
+            this.router.navigateByUrl('category/category-list');
           }
         }
       ]
