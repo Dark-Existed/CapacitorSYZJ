@@ -20,6 +20,7 @@ export class CategoryNameEditPage implements OnInit {
     private toastController: ToastController,
   ) {
     this.category = JSON.parse(JSON.stringify(this.navParms.data.data));
+    // this.category = this.navParms.data.data;
     this.parentId = this.navParms.data.parentId;
   }
 
