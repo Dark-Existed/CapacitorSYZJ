@@ -115,16 +115,22 @@ export class SignupPage implements AfterViewInit {
     }
   }
 
-  // TODO 待完成
+
   async onValidateCode(form: NgForm) {
-    if (form.valid) {
-      if (this.authentication.validate(this.signup.code)) {
-        this.codeValid = true;
-        this.onNext();
-      } else {
-        const toast = await this.toastController.create({ duration: 3000 });
-        toast.message = '验证码有误';
-        toast.present();
+    const debug = true;
+    if (debug) {
+      this.codeValid = true;
+      this.onNext();
+    } else {
+      if (form.valid) {
+        if (this.authentication.validate(this.signup.code)) {
+          this.codeValid = true;
+          this.onNext();
+        } else {
+          const toast = await this.toastController.create({ duration: 3000 });
+          toast.message = '验证码有误';
+          toast.present();
+        }
       }
     }
   }

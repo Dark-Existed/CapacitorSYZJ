@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,20 +15,22 @@ export class HomePage implements OnInit {
   ];
 
   private buttons = [
-    { name: '新增商品', iconSrc: 'assets/img/add_sales.png' },
-    { name: '新增会员', iconSrc: 'assets/img/add_user.png' },
-    { name: '收银记账', iconSrc: 'assets/img/sales_account.png' },
-    { name: '支出管理', iconSrc: 'assets/img/a_note.png' },
-    { name: '商品管理', iconSrc: 'assets/img/sales_management.png' },
-    { name: '会员管理', iconSrc: 'assets/img/user_management.png' },
-    { name: '查询销售', iconSrc: 'assets/img/shop_management.png' },
-    { name: '智能分析', iconSrc: 'assets/img/analysis.png' },
-    { name: '供应商管理', iconSrc: 'assets/img/supply_chain.png' },
-    { name: '挂单', iconSrc: 'assets/img/commission.png' },
-    { name: '高级功能', iconSrc: 'assets/img/advanced_feature.png' },
+    { name: '新增商品', iconSrc: 'assets/img/add_sales.png', routerLink: '/product-add' },
+    { name: '新增会员', iconSrc: 'assets/img/add_user.png', routerLink: '' },
+    { name: '收银记账', iconSrc: 'assets/img/sales_account.png', routerLink: '' },
+    { name: '支出管理', iconSrc: 'assets/img/a_note.png', routerLink: '' },
+    { name: '商品管理', iconSrc: 'assets/img/sales_management.png', routerLink: '/category/category-list' },
+    { name: '会员管理', iconSrc: 'assets/img/user_management.png', routerLink: '' },
+    { name: '查询销售', iconSrc: 'assets/img/shop_management.png', routerLink: '' },
+    { name: '智能分析', iconSrc: 'assets/img/analysis.png', routerLink: '' },
+    { name: '供应商管理', iconSrc: 'assets/img/supply_chain.png', routerLink: '' },
+    { name: '挂单', iconSrc: 'assets/img/commission.png', routerLink: '' },
+    { name: '高级功能', iconSrc: 'assets/img/advanced_feature.png', routerLink: '' },
   ];
 
-  constructor() { }
+  constructor(
+    private router: Router,
+  ) { }
 
   ngOnInit() {
   }
@@ -45,6 +48,10 @@ export class HomePage implements OnInit {
     } else {
       return -1;
     }
+  }
+
+  onClickBtn(button) {
+    this.router.navigateByUrl(button.routerLink);
   }
 
 }
