@@ -1,7 +1,7 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx';
+import { ImagePicker, ImagePickerOptions, OutputType } from '@ionic-native/image-picker/ngx';
 import { ActionSheetController } from '@ionic/angular';
 
 @Component({
@@ -41,10 +41,10 @@ export class ProductAddPage implements OnInit {
     await actionSheet.present();
   }
 
-  getFromPhoto() {
+  async getFromPhoto() {
     const options: ImagePickerOptions = {
       allow_video: false,
-      outputType: 1,
+      outputType: OutputType.DATA_URL,
     };
     this.imagePicker.getPictures(options).then((results) => {
       for (const result of results) {
@@ -55,7 +55,7 @@ export class ProductAddPage implements OnInit {
     });
   }
 
-  takePicture() {
+  async takePicture() {
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
