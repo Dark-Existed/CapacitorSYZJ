@@ -1,5 +1,6 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ImagePicker, ImagePickerOptions, OutputType } from '@ionic-native/image-picker/ngx';
 import { ActionSheetController } from '@ionic/angular';
@@ -14,6 +15,7 @@ export class ProductAddPage implements OnInit {
   constructor(
     private camera: Camera,
     private imagePicker: ImagePicker,
+    private barcodeScanner: BarcodeScanner,
     private actionSheetController: ActionSheetController
   ) { }
 
@@ -67,6 +69,18 @@ export class ProductAddPage implements OnInit {
     }, (err) => {
       console.log('Camera issue: ' + err);
     });
+  }
+
+  async onScan() {
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('Barcode data', barcodeData);
+    }).catch(err => {
+      console.log('Error', err);
+    });
+  }
+
+  onSave(continues = false) {
+
   }
 
 }

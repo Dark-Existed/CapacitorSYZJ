@@ -12,6 +12,7 @@
     <ion-thumbnail (click)="onPresentActionSheet()" slot="start">
       <img src="assets/img/supplier_icon.png">
     </ion-thumbnail>
+    <ion-note style="align-self: center;">上传图片</ion-note>
   </ion-item>
 
   <ion-list>
@@ -21,7 +22,7 @@
         <ion-text color="primary">*</ion-text>
       </ion-label>
       <ion-input type="text" placeholder="输入商品条形码" required></ion-input>
-      <ion-icon name="scan-outline" slot="end" color="primary"></ion-icon>
+      <ion-icon name="scan-outline" slot="end" color="primary" (click)="onScan()"></ion-icon>
     </ion-item>
 
     <ion-item>
@@ -48,12 +49,12 @@
         售价
         <ion-text color="primary">*</ion-text>
       </ion-label>
-      <ion-input type="text" placeholder="输入商品售价"></ion-input>
+      <ion-input type="number" placeholder="输入商品售价" required></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>进价</ion-label>
-      <ion-input type="text" placeholder="输入商品进价"></ion-input>
+      <ion-input type="number" placeholder="输入商品进价"></ion-input>
     </ion-item>
 
     <ion-item>
