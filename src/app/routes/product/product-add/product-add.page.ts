@@ -2,7 +2,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ImagePicker, ImagePickerOptions, OutputType } from '@ionic-native/image-picker/ngx';
-import { ActionSheetController, AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 
@@ -23,6 +23,7 @@ export class ProductAddPage implements OnInit {
     private barcodeScanner: BarcodeScanner,
     private alertController: AlertController,
     private actionSheetController: ActionSheetController,
+    private toastController: ToastController,
     private productService: ProductService,
   ) {
     this.product = new Product();
