@@ -1,9 +1,10 @@
-import { ThrowStmt } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ImagePicker, ImagePickerOptions, OutputType } from '@ionic-native/image-picker/ngx';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
+import { Product } from '../product';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-product-add',
@@ -12,12 +13,21 @@ import { ActionSheetController } from '@ionic/angular';
 })
 export class ProductAddPage implements OnInit {
 
+  private product: Product;
+  private supplierDisplayName = '商品供应商';
+
   constructor(
+    private zone: NgZone,
     private camera: Camera,
     private imagePicker: ImagePicker,
     private barcodeScanner: BarcodeScanner,
-    private actionSheetController: ActionSheetController
-  ) { }
+    private alertController: AlertController,
+    private actionSheetController: ActionSheetController,
+    private productService: ProductService,
+  ) {
+    this.product = new Product();
+    this.product.id = this.productService.uuid();
+  }
 
   ngOnInit() {
   }
@@ -50,7 +60,7 @@ export class ProductAddPage implements OnInit {
     };
     this.imagePicker.getPictures(options).then((results) => {
       for (const result of results) {
-        console.log('Image Data URI: ' + result);
+        this.product.images.push('data:image/jpeg;base64,' + result);
       }
     }, (err) => {
       console.log('ImagePicker issue: ' + err);
@@ -65,7 +75,7 @@ export class ProductAddPage implements OnInit {
       mediaType: this.camera.MediaType.PICTURE
     };
     this.camera.getPicture(options).then((imageData) => {
-      console.log(imageData);
+      this.product.images.push('data:image/jpeg;base64,' + imageData);
     }, (err) => {
       console.log('Camera issue: ' + err);
     });
@@ -73,14 +83,55 @@ export class ProductAddPage implements OnInit {
 
   async onScan() {
     this.barcodeScanner.scan().then(barcodeData => {
-      console.log('Barcode data', barcodeData);
+      this.product.barcode = barcodeData.text;
     }).catch(err => {
       console.log('Error', err);
     });
   }
 
-  onSave(continues = false) {
+  async presentAlertPrompt() {
+    const alert = await this.alertController.create({
+      header: '新增供货商',
+      cssClass: 'twoBtn',
+      inputs: [
+        {
+          name: 'name',
+          type: 'text',
+          placeholder: '输入供货商名称'
+        },
+        {
+          name: 'phone',
+          type: 'number',
+          placeholder: '输入供货商电话',
+        }
+      ],
+      buttons: [
+        {
+          text: '取消',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        },
+        {
+          text: '保存',
+          handler: (data) => {
+            this.zone.run(() => {
+              this.product.supplier.name = data.name;
+              this.supplierDisplayName = data.name;
+              this.product.supplier.phone = data.phone;
+            });
+          }
+        }
+      ]
+    });
 
+    await alert.present();
+  }
+
+  onSave(continues = false) {
+    this.productService.insert(this.product);
   }
 
 }
