@@ -1,4 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ImagePicker, ImagePickerOptions, OutputType } from '@ionic-native/image-picker/ngx';
@@ -25,9 +26,10 @@ export class ProductAddPage implements OnInit {
     private actionSheetController: ActionSheetController,
     private toastController: ToastController,
     private productService: ProductService,
+    private router: Router,
   ) {
     this.product = new Product();
-    this.product.id = this.productService.uuid();
+    this.productService.setParentCategoryIdByName(this.product);
   }
 
   ngOnInit() {
@@ -131,8 +133,19 @@ export class ProductAddPage implements OnInit {
     await alert.present();
   }
 
-  onSave(continues = false) {
+  async onSave(continues = false) {
     this.productService.insert(this.product);
+    const toast = await this.toastController.create({
+      duration: 2000
+    });
+    toast.message = '添加成功';
+    toast.present();
+    if (continues) {
+      this.productService.resetProdect(this.product);
+    } else {
+      this.router.navigateByUrl('');
+    }
+
   }
 
 }

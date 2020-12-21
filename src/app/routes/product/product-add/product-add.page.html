@@ -13,7 +13,7 @@
     <ion-thumbnail (click)="onPresentActionSheet()" slot="start">
       <img src="assets/img/supplier_icon.png">
     </ion-thumbnail>
-    <ion-thumbnail *ngFor="let image of product.images" style="margin-right: 8px;">
+    <ion-thumbnail *ngFor="let image of product?.images" style="margin-right: 8px;">
       <img src={{ image }} />
     </ion-thumbnail>
     <ion-note style="align-self: center; margin-right: 8px;" slot="end">上传图片</ion-note>
@@ -44,7 +44,7 @@
           分类
           <ion-text color="primary">*</ion-text>
         </ion-label>
-        <ion-note slot="end">{{ product.categoryName }}</ion-note>
+        <ion-note slot="end">{{ product?.categoryName }}</ion-note>
         <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
       </ion-item>
     </ion-list>
@@ -75,7 +75,7 @@
 
       <ion-item (click)="presentAlertPrompt()">
         <ion-label style="width: auto; flex: none; margin-right: 8px;">供应商</ion-label>
-        <ion-label style="color: #a3a3a3;">{{ supplierDisplayName }}</ion-label>
+        <ion-label style="color: #a3a3a3;">{{ product.supplier.name }}</ion-label>
         <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
       </ion-item>
 
@@ -88,20 +88,18 @@
 
   </form>
 
-
-
 </ion-content>
 
 <ion-footer class="ion-no-border">
   <ion-toolbar class="ion-no-padding">
     <ion-row>
       <ion-col class="ion-no-padding">
-        <ion-button expand="full" color="primary">
-          完成
+        <ion-button (click)="onSave()" expand="full" color="primary">
+          保存
         </ion-button>
       </ion-col>
       <ion-col class="ion-no-padding">
-        <ion-button expand="full" color="primary">
+        <ion-button (click)="onSave(true)" expand="full" color="primary">
           继续添加
         </ion-button>
       </ion-col>

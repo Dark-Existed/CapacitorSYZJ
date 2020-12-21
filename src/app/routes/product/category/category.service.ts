@@ -198,4 +198,14 @@ export class CategoryService {
     this.localStorageService.set(CATEGORY_KEY, categories);
   }
 
+  getParentCategoryIdByName(name: string): number {
+    const categories: Category[] = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+    for (const category of categories) {
+      if (category.name === name) {
+        return category.id;
+      }
+    }
+    return -1;
+  }
+
 }
