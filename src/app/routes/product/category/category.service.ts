@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { AjaxResult } from 'src/app/shared/class/ajax-result';
 import { CATEGORY_KEY, LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { Category } from './category';
@@ -8,6 +9,8 @@ import { CATEGORIES } from './mock.categories';
   providedIn: 'root'
 })
 export class CategoryService {
+
+  activeCategory = new Subject<Category>();
 
   constructor(
     private localStorageService: LocalStorageService
@@ -206,6 +209,14 @@ export class CategoryService {
       }
     }
     return -1;
+  }
+
+  watchCategory(): Observable<Category> {
+    return this.activeCategory.asObservable();
+  }
+  //向订阅者发送通知，传送数据
+  setActiveCategory(category: Category) {
+    this.activeCategory.next(category);
   }
 
 }

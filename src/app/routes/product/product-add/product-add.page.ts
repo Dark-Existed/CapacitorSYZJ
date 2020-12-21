@@ -4,6 +4,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ImagePicker, ImagePickerOptions, OutputType } from '@ionic-native/image-picker/ngx';
 import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { CategoryService } from '../category/category.service';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 
@@ -15,8 +17,7 @@ import { ProductService } from '../product.service';
 export class ProductAddPage implements OnInit {
 
   private product: Product;
-  private supplierDisplayName = '商品供应商';
-
+  private subscription: Subscription;
   constructor(
     private zone: NgZone,
     private camera: Camera,
@@ -26,10 +27,19 @@ export class ProductAddPage implements OnInit {
     private actionSheetController: ActionSheetController,
     private toastController: ToastController,
     private productService: ProductService,
+    private categoryService: CategoryService,
     private router: Router,
   ) {
     this.product = new Product();
     this.productService.setParentCategoryIdByName(this.product);
+    this.subscription = this.categoryService.watchCategory().subscribe(
+      (activateCategory) => {
+        this.product.categoryId = activateCategory.id;
+        this.product.categoryName = activateCategory.name;
+      }, (error) => {
+        console.log(error);
+      }
+    );
   }
 
   ngOnInit() {
@@ -122,7 +132,6 @@ export class ProductAddPage implements OnInit {
           handler: (data) => {
             this.zone.run(() => {
               this.product.supplier.name = data.name;
-              this.supplierDisplayName = data.name;
               this.product.supplier.phone = data.phone;
             });
           }

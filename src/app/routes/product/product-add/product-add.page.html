@@ -39,7 +39,7 @@
         <ion-input name="productName" [(ngModel)]="product.name" type="text" required></ion-input>
       </ion-item>
 
-      <ion-item>
+      <ion-item [routerLink]="['/category/category-list']">
         <ion-label>
           分类
           <ion-text color="primary">*</ion-text>
