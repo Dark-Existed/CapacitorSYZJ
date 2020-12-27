@@ -19,7 +19,7 @@ export class HomePage implements OnInit {
     { name: '新增会员', iconSrc: 'assets/img/add_user.png', routerLink: '' },
     { name: '收银记账', iconSrc: 'assets/img/sales_account.png', routerLink: '' },
     { name: '支出管理', iconSrc: 'assets/img/a_note.png', routerLink: '' },
-    { name: '商品管理', iconSrc: 'assets/img/sales_management.png', routerLink: '/category/category-list' },
+    { name: '商品管理', iconSrc: 'assets/img/sales_management.png', routerLink: '/product-list' },
     { name: '会员管理', iconSrc: 'assets/img/user_management.png', routerLink: '' },
     { name: '查询销售', iconSrc: 'assets/img/shop_management.png', routerLink: '' },
     { name: '智能分析', iconSrc: 'assets/img/analysis.png', routerLink: '' },
