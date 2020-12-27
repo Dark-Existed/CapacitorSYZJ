@@ -214,7 +214,7 @@ export class CategoryService {
   watchCategory(): Observable<Category> {
     return this.activeCategory.asObservable();
   }
-  //向订阅者发送通知，传送数据
+
   setActiveCategory(category: Category) {
     this.activeCategory.next(category);
   }
