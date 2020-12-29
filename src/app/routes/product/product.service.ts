@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AjaxResult } from 'src/app/shared/class/ajax-result';
 import { Supplier } from 'src/app/shared/class/supplier';
 import { LocalStorageService, PRODUCT_KEY } from 'src/app/shared/services/local-storage.service';
 import { CategoryService } from './category/category.service';
@@ -52,6 +53,65 @@ export class ProductService {
       phone: null
     };
     product.remark = '';
+  }
+
+  async getList(products: Product[], index: number, size: number): Promise<AjaxResult> {
+    if (index < 0) {
+      return new AjaxResult(false, {});
+    }
+    if (size < 0) {
+      return new AjaxResult(false, {});
+    }
+    if (products.length === 0) {
+      return new AjaxResult(true, {
+        total: 0,
+        products
+      });
+    }
+    const currentproductList = products.slice(index * size, (index + 1) * size);
+    return new AjaxResult(true, {
+      total: currentproductList.length,
+      currentproductList
+    });
+  }
+
+  getTotalStorageNum(products: Product[]): number {
+    let totalStorageNum = 0;
+    for (const product of products) {
+      totalStorageNum += product.stock;
+    }
+    return totalStorageNum;
+  }
+
+  getTotalPrice(products: Product[]): number {
+    let totalPrice = 0;
+    for (const product of products) {
+      totalPrice += product.purchasePrice;
+    }
+    return totalPrice;
+  }
+
+  async getListByCondition(searchProductInput: any): Promise<AjaxResult> {
+    const productList: Product[] = this.localStorageService.get(PRODUCT_KEY, []);
+    const result = [];
+    for (const product of productList) {
+      if (product.name.toString().indexOf(searchProductInput) !== -1 ||
+        product.barcode.toString().indexOf(searchProductInput) !== -1) {
+        result.push(product);
+      }
+    }
+    return new AjaxResult(true, result);
+  }
+
+  async getListByCategoryId(categoryId: number): Promise<AjaxResult> {
+    const productList: Product[] = this.localStorageService.get('Product', []);
+    const result = [];
+    for (const product of productList) {
+      if (product.categoryId === categoryId) {
+        result.push(product);
+      }
+    }
+    return new AjaxResult(true, result);
   }
 
 }
