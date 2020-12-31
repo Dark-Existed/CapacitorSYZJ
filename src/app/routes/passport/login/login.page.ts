@@ -30,7 +30,7 @@ export class LoginPage implements AfterViewInit {
 
   fillHistoryUser() {
     const historyUser = this.passportService.getHistoryUser();
-    this.accountInput.value = historyUser;
+    this.username = historyUser;
   }
 
   async onLogin(form: NgForm) {
