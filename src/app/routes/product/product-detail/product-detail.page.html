@@ -1,0 +1,70 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="商品列表"></ion-back-button>
+    </ion-buttons>
+    <ion-title>商品详情</ion-title>
+    <ion-button slot="end" color="primary" (click)="onPresentPopover($event)">
+      <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="nopadding" color="light">
+  <form>
+      <ion-item-divider>
+        <ion-thumbnail *ngFor="let photo of product?.images">
+          <img src={{ photo }}>
+        </ion-thumbnail>
+        <ion-text *ngIf="product?.images.length == 0">无图片</ion-text>
+      </ion-item-divider>
+      <ion-list class="nopadding">
+        <ion-item>
+          <ion-label>名称</ion-label>
+          <ion-note slot="end">{{product?.name}}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>分类</ion-label>
+          <ion-note slot="end">{{product?.categoryName}}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>条码</ion-label>
+          <ion-note slot="end">{{product?.barcode}}</ion-note>
+        </ion-item>
+      </ion-list>
+
+      <ion-list style="margin-top: 5%;" class="nopadding">
+        <ion-item>
+          <ion-label>进价</ion-label>
+          <ion-note *ngIf="CheckPrice === true" style="font-size: 12pt;" slot="end">{{product?.importPrice}}</ion-note>
+          <ion-button slot="end" *ngIf="CheckPrice === false" (click)="checkUser()" size="small" color="primary" expand="block" fill="outline">查看进价</ion-button>
+        </ion-item>
+        <ion-item>
+          <ion-label>售价</ion-label>
+          <ion-note slot="end" style="font-size: 12pt;">¥{{product?.price | number:'1.2-2'}}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>规格</ion-label>
+          <ion-note  style="font-size: 12pt;" slot="end">{{product?.standard}}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>库存</ion-label>
+          <ion-note style="font-size: 12pt;" slot="end">{{product?.StorageNum}}</ion-note>
+        </ion-item>
+      </ion-list>
+      
+  </form>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full" color="primary" routerLink="change-product-storage" [queryParams]="{barcode: product.barcode}">出/入库</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" color="primary" (click)="onPresentActionSheet()">分享</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

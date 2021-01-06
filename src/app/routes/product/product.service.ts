@@ -114,4 +114,17 @@ export class ProductService {
     return new AjaxResult(true, result);
   }
 
+  getProductByBarcode(barcode: string): Product {
+    const productList = this.localStorageService.get('Product', []);
+    let res: Product;
+    for (const product of productList) {
+      if (product.barcode === barcode) {
+        res = product;
+        break;
+      }
+    }
+    return res;
+  }
+
+
 }
