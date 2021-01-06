@@ -29,11 +29,42 @@ export class PopoverPage implements OnInit {
   }
 
   async DeleteProduct() {
-
+    const alert = await this.alertController.create({
+      header: '删除',
+      message: '确定删除该商品信息？',
+      cssClass: 'twoBtn',
+      buttons: [{
+        text: '确定',
+        handler: async () => {
+          const temp = this.productService.deleteProductByBarcode(this.barcode);
+          if (temp === true) {
+            const toast = await this.toastController.create({
+              message: '删除成功',
+              duration: 2000,
+            });
+            await toast.present();
+            this.navController.navigateForward('/product-list');
+          } else {
+            const toast = await this.toastController.create({
+              message: '删除失败',
+              duration: 2000,
+            });
+            await toast.present();
+          }
+        }
+      }, {
+        text: '取消',
+        handler: () => {
+          console.log('cancel');
+        }
+      }]
+    });
+    await alert.present();
+    this.popoverController.dismiss();
   }
 
   async editProduct() {
-
+    this.popoverController.dismiss();
   }
 
 }
