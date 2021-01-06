@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController, AlertController, PopoverController, ToastController } from '@ionic/angular';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
+import { PopoverPage } from './popover/popover.page';
 
 @Component({
   selector: 'app-product-detail',
@@ -30,15 +31,15 @@ export class ProductDetailPage implements OnInit {
   ngOnInit() {
   }
 
-  async onPresentPopover(event) {
-    // const popover = await this.popoverController.create({
-    //   component: PopoverPage,
-    //   event: event,
-    //   componentProps: { 'barcode': this.product.barcode },
-    //   translucent: false,
-    //   backdropDismiss: true
-    // });
-    // await popover.present();
+  async onPresentPopover(presentEvent) {
+    const popover = await this.popoverController.create({
+      component: PopoverPage,
+      event: presentEvent,
+      componentProps: { barcode: this.product.barcode },
+      translucent: false,
+      backdropDismiss: true
+    });
+    await popover.present();
   }
 
   async checkUser() {
