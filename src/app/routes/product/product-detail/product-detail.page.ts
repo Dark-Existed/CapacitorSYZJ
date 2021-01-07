@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ActionSheetController, AlertController, PopoverController, ToastController } from '@ionic/angular';
+import { ActionSheetController, PopoverController } from '@ionic/angular';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 import { PopoverPage } from './popover/popover.page';
@@ -19,12 +19,11 @@ export class ProductDetailPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
     private popoverController: PopoverController,
-    private alertController: AlertController,
-    private toastController: ToastController,
     private actionSheetController: ActionSheetController
   ) {
     this.activatedRoute.queryParams.subscribe(queryParams => {
       this.product = this.productService.getProductByBarcode(queryParams.barcode);
+      console.log(this.product);
     });
   }
 

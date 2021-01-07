@@ -104,7 +104,7 @@ export class ProductService {
   }
 
   async getListByCategoryId(categoryId: number): Promise<AjaxResult> {
-    const productList: Product[] = this.localStorageService.get('Product', []);
+    const productList: Product[] = this.localStorageService.get(PRODUCT_KEY, []);
     const result = [];
     for (const product of productList) {
       if (product.categoryId === categoryId) {
@@ -115,7 +115,7 @@ export class ProductService {
   }
 
   getProductByBarcode(barcode: string): Product {
-    const productList = this.localStorageService.get('Product', []);
+    const productList = this.localStorageService.get(PRODUCT_KEY, []);
     let res: Product;
     for (const product of productList) {
       if (product.barcode === barcode) {
@@ -126,5 +126,14 @@ export class ProductService {
     return res;
   }
 
+  deleteProductByBarcode(barcode: string): boolean {
+    let products: Product[] = this.localStorageService.get(PRODUCT_KEY, []);
+    if (products === null || products.length === 0) {
+      return false;
+    }
+    products = products.filter((item) => item.barcode !== barcode);
+    this.localStorageService.set(PRODUCT_KEY, products);
+    return true;
+  }
 
 }
