@@ -68,10 +68,10 @@ export class ProductService {
         products
       });
     }
-    const currentproductList = products.slice(index * size, (index + 1) * size);
+    const currentProductList = products.slice(index * size, (index + 1) * size);
     return new AjaxResult(true, {
-      total: currentproductList.length,
-      currentproductList
+      total: currentProductList.length,
+      currentProductList
     });
   }
 

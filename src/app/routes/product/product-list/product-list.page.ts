@@ -71,7 +71,7 @@ export class ProductListPage implements OnInit {
     this.productService.getList(this.products, this.currentIndex, 10).then((res) => {
       if (res.success) {
         this.productCount = res.result.total;
-        this.currentProduct = res.result.currentproductList;
+        this.currentProduct = res.result.currentProductList;
         this.totalPrice = this.productService.getTotalPrice(this.products);
         this.totalStorageNum = this.productService.getTotalStorageNum(this.products);
       }
@@ -95,7 +95,7 @@ export class ProductListPage implements OnInit {
     this.productService.getList(this.products, this.currentIndex, 10).then((res) => {
       if (res.success) {
         this.productCount = res.result.total;
-        this.currentProduct = res.result.currentproductList;
+        this.currentProduct = res.result.currentProductList;
         this.totalPrice = this.productService.getTotalPrice(this.products);
         this.totalStorageNum = this.productService.getTotalStorageNum(this.products);
       }
@@ -105,16 +105,15 @@ export class ProductListPage implements OnInit {
 
   async onRefresh(event) {
     this.currentIndex = 0;
-    const refresher = event.target;
     this.productService.getList(this.products, this.currentIndex, 10).then((res) => {
       if (res.success) {
         this.productCount = res.result.total;
-        this.currentProduct = res.result.currentproductList;
+        this.currentProduct = res.result.currentProductList;
         this.totalPrice = this.productService.getTotalPrice(this.products);
         this.totalStorageNum = this.productService.getTotalStorageNum(this.products);
       }
     });
-    refresher.complete();
+    event.target.complete();
   }
 
   async onInfinite(event) {
@@ -124,7 +123,7 @@ export class ProductListPage implements OnInit {
       if (this.productCount !== this.products.length) {
         this.productService.getList(this.products, this.currentIndex, 10).then((res) => {
           if (res.success) {
-            this.currentProduct = this.currentProduct.concat(res.result.currentproductList);
+            this.currentProduct = this.currentProduct.concat(res.result.currentProductList);
             this.totalPrice = this.productService.getTotalPrice(this.products);
             this.totalStorageNum = this.productService.getTotalStorageNum(this.products);
             this.productCount += res.result.total;
@@ -137,13 +136,13 @@ export class ProductListPage implements OnInit {
 
   getListByCategoryId() {
     this.currentIndex = 0;
-    this.productService.getListByCategoryId(this.categoryId).then((res) => {
-      if (res.success) {
-        this.products = res.result;
+    this.productService.getListByCategoryId(this.categoryId).then((getListByCategoryIdResult) => {
+      if (getListByCategoryIdResult.success) {
+        this.products = getListByCategoryIdResult.result;
         this.productService.getList(this.products, this.currentIndex, 10).then((res) => {
           if (res.success) {
             this.productCount = res.result.total;
-            this.currentProduct = res.result.currentproductList;
+            this.currentProduct = res.result.currentProductList;
             this.totalPrice = this.productService.getTotalPrice(this.products);
             this.totalStorageNum = this.productService.getTotalStorageNum(this.products);
           }

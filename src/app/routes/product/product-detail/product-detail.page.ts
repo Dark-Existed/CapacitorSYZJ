@@ -60,7 +60,6 @@ export class ProductDetailPage implements OnInit {
         text: '确定',
         handler: (data) => {
           const currentUser = this.passportService.getCueerntUser();
-          console.log(typeof data.password);
           const comfirmResult = this.passportService.confirmCurrentUser(currentUser.id, data.password);
           if (comfirmResult.success) {
             this.checkPrice = true;

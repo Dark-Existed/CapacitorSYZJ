@@ -4,7 +4,7 @@
       <ion-back-button text="首页" default-href="/tabs/home"></ion-back-button>
     </ion-buttons>
     <ion-title>商品管理</ion-title>
-    <ion-button slot="end" color="primary" (click)="searchByCategory()">
+    <ion-button slot="end" color="primary" (click)="searchByCategory()" class="tab-item">
       分类
     </ion-button>
   </ion-toolbar>
@@ -52,7 +52,6 @@
         <ion-thumbnail>
           <img src="assets/img/c_goodspicture.png" *ngIf="product.images?.length == 0" />
           <img [src]="product.images[0]" *ngIf="product.images?.length > 0" />
-          <!-- To show the pirctures of goods if they exist -->
         </ion-thumbnail>
       </ion-col>
       <ion-col size="9">
@@ -64,7 +63,7 @@
         </ion-row>
         <ion-row class="detail">
           <ion-text color="medium">条码：{{product.barcode}} </ion-text>
-          <ion-text color="medium" class="storageNum"> 库存：{{product.StorageNum}}件</ion-text>
+          <ion-text color="medium" class="storageNum"> 库存：{{product.stock}}件</ion-text>
         </ion-row>
       </ion-col>
       <ion-col size="1">
