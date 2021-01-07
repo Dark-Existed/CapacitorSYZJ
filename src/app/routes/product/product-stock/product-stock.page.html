@@ -4,7 +4,7 @@
       <ion-back-button text="返回"></ion-back-button>
     </ion-buttons>
     <ion-title>修改库存</ion-title>
-    <ion-button slot="end" color="primary" routerLink="../../storage-log" [queryParams]="{barcode: product.barcode}">
+    <ion-button slot="end" color="primary" routerLink="/product-log" [queryParams]="{barcode: product.barcode}" class="tab-item">
       出入库记录
     </ion-button>
   </ion-toolbar>
@@ -12,7 +12,7 @@
 
 <ion-content class="nopadding" color="light">
   <div class="select">
-    <ion-segment [(ngModel)]="IncreOrDecre">
+    <ion-segment [(ngModel)]="increOrDecre">
       <ion-segment-button value="IncreaseStorage">入库</ion-segment-button>
       <ion-segment-button value="DecreaseStorage">出库</ion-segment-button>
     </ion-segment>
@@ -21,7 +21,7 @@
   <form #modifyInfor="ngForm">
     <ion-list>
       <ion-item>
-        <ion-label position="fix">{{ inFor[IncreOrDecre] }}</ion-label>
+        <ion-label position="fix">{{ inputDescribe[increOrDecre] }}</ion-label>
         <ion-input type="number" placeholder="0" [(ngModel)]="num" name="num"
                    clearInput="true" required slot="end"></ion-input>
         </ion-item>
@@ -35,5 +35,5 @@
       <ion-note>当前库存：{{ product.stock }}件</ion-note>
     </div>
   </form>
-  <ion-button expand="full" [disabled]="modifyInfor.invalid" (click)="onConfirm()" color="primary">确定</ion-button>
+  <ion-button expand="full" [disabled]="modifyInfor.invalid" (click)="onConfirm()" color="primary">{{ buttonDescribe[increOrDecre] }}</ion-button>
 </ion-content>
