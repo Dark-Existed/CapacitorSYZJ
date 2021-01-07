@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ActionSheetController, PopoverController } from '@ionic/angular';
+import { ActionSheetController, AlertController, PopoverController, ToastController } from '@ionic/angular';
+import { PassportServiceService } from 'src/app/shared/services/passport-service.service';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 import { PopoverPage } from './popover/popover.page';
@@ -19,11 +20,13 @@ export class ProductDetailPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
     private popoverController: PopoverController,
-    private actionSheetController: ActionSheetController
+    private actionSheetController: ActionSheetController,
+    private alertController: AlertController,
+    private toastController: ToastController,
+    private passportService: PassportServiceService,
   ) {
     this.activatedRoute.queryParams.subscribe(queryParams => {
       this.product = this.productService.getProductByBarcode(queryParams.barcode);
-      console.log(this.product);
     });
   }
 
@@ -42,7 +45,40 @@ export class ProductDetailPage implements OnInit {
   }
 
   async checkUser() {
+    const toast = await this.toastController.create({
+      duration: 2000
+    });
+    const alert = await this.alertController.create({
+      header: '请验证账号密码',
+      cssClass: 'twoBtn',
+      inputs: [{
+        name: 'password',
+        type: 'password',
+        placeholder: '请输入密码'
+      }],
+      buttons: [{
+        text: '确定',
+        handler: (data) => {
+          const currentUser = this.passportService.getCueerntUser();
+          console.log(typeof data.password);
+          const comfirmResult = this.passportService.confirmCurrentUser(currentUser.id, data.password);
+          if (comfirmResult.success) {
+            this.checkPrice = true;
+          } else {
+            toast.message = comfirmResult.result;
+            toast.present();
+          }
+        }
+      }, {
+        text: '取消',
+        role: 'cancel',
+        handler: () => {
+          console.log('cancel');
+        }
+      }],
+    });
 
+    await alert.present();
   }
 
   async onPresentActionSheet() {

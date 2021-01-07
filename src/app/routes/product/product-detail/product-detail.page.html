@@ -35,9 +35,9 @@
     <ion-list style="margin-top: 5%;" class="nopadding">
       <ion-item>
         <ion-label>进价</ion-label>
-        <ion-note *ngIf="checkPrice === true" style="font-size: 12pt;" slot="end">{{ product?.purchasePrice }}
+        <ion-note *ngIf="checkPrice === true" style="font-size: 12pt;" slot="end">¥{{ product?.purchasePrice| number:'1.2-2' }}
         </ion-note>
-        <ion-button slot="end" *ngIf="CheckPrice === false" (click)="checkUser()" size="small" color="primary"
+        <ion-button slot="end" *ngIf="checkPrice === false" (click)="checkUser()" size="small" color="primary"
           expand="block" fill="outline">查看进价</ion-button>
       </ion-item>
       <ion-item>

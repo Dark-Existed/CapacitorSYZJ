@@ -97,6 +97,15 @@ export class PassportServiceService {
     return new AjaxResult(false, null);
   }
 
+  confirmCurrentUser(userId: number, password: string): AjaxResult {
+    const user = this.getUser(userId);
+    if (this.validatePassword(password, user.passwordToken)) {
+      return new AjaxResult(true, null);
+    } else {
+      return new AjaxResult(false, '密码错误');
+    }
+  }
+
   /*
    * 添加用户
    * @param {SignupInfo} signupInfo
