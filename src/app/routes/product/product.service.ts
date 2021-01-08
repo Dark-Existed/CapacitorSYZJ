@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AjaxResult } from 'src/app/shared/class/ajax-result';
+import { StockLog } from 'src/app/shared/class/stock-log';
 import { Supplier } from 'src/app/shared/class/supplier';
 import { LocalStorageService, PRODUCT_KEY } from 'src/app/shared/services/local-storage.service';
 import { CategoryService } from './category/category.service';
 import { Product } from './product';
+import { StockService } from './product-stock/stock.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,7 @@ export class ProductService {
   constructor(
     private localStorageService: LocalStorageService,
     private categoryService: CategoryService,
+    private stockService: StockService,
   ) { }
 
   getProducts(): Product[] {
@@ -116,14 +119,12 @@ export class ProductService {
 
   getProductByBarcode(barcode: string): Product {
     const productList = this.localStorageService.get(PRODUCT_KEY, []);
-    let res: Product;
     for (const product of productList) {
       if (product.barcode === barcode) {
-        res = product;
-        break;
+        return product;
       }
     }
-    return res;
+    return null;
   }
 
   deleteProductByBarcode(barcode: string): boolean {
@@ -136,4 +137,54 @@ export class ProductService {
     return true;
   }
 
+  updateProdect(product: Product) {
+    const products: Product[] = this.localStorageService.get(PRODUCT_KEY, []);
+    for (let p of products) {
+      if (p.barcode === product.barcode) {
+        p = product;
+        break;
+      }
+    }
+    this.localStorageService.set(PRODUCT_KEY, products);
+  }
+
+  async updateProductStock(productBarcode: string, change: number, remark: string): Promise<AjaxResult> {
+    const product = this.getProductByBarcode(productBarcode);
+    if (change < 0) {
+      if (product.stock + change < 0) {
+        return new AjaxResult(false, null, { message: '出库数量不能大于库存', details: '' });
+      } else {
+        product.stock += change;
+        this.updateProdect(product);
+
+        const stockLog = new StockLog();
+        stockLog.productBarcode = product.barcode;
+        stockLog.type = '出库';
+        stockLog.change = change;
+        stockLog.sum = product.stock;
+        stockLog.time = new Date();
+        stockLog.remark = remark;
+        this.stockService.insertSrockLog(stockLog);
+
+        return new AjaxResult(true, product);
+      }
+    } else {
+      product.stock += change;
+      this.updateProdect(product);
+
+      const stockLog = new StockLog();
+      stockLog.productBarcode = product.barcode;
+      stockLog.type = '入库';
+      stockLog.change = change;
+      stockLog.sum = product.stock;
+      stockLog.time = new Date();
+      stockLog.remark = remark;
+      this.stockService.insertSrockLog(stockLog);
+
+      return new AjaxResult(true, product);
+    }
+
+  }
+
 }
+
