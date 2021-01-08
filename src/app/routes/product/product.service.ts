@@ -141,7 +141,7 @@ export class ProductService {
     const products: Product[] = this.localStorageService.get(PRODUCT_KEY, []);
     for (let p of products) {
       if (p.barcode === product.barcode) {
-        p = product;
+        p.stock = product.stock;
         break;
       }
     }

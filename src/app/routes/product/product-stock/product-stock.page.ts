@@ -29,9 +29,7 @@ export class ProductStockPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private alertController: AlertController,
     private toastController: ToastController,
-    private stockService: StockService,
     private productService: ProductService,
   ) {
     this.activatedRoute.queryParams.subscribe(queryParams => {
@@ -51,11 +49,28 @@ export class ProductStockPage implements OnInit {
 
     if (this.increOrDecre === 'IncreaseStock') {
       stockLog.type = '入库';
-
+      this.productService.updateProductStock(this.product.barcode, this.change, this.remark).then((res) => {
+        if (res.success) {
+          this.product = res.result;
+          toast.message = '入库成功';
+          toast.present();
+        } else {
+          toast.message = res.error.message;
+          toast.present();
+        }
+      });
     } else {
       stockLog.type = '出库';
-      this.change = -this.change;
-
+      this.productService.updateProductStock(this.product.barcode, -this.change, this.remark).then((res) => {
+        if (res.success) {
+          this.product = res.result;
+          toast.message = '出库成功';
+          toast.present();
+        } else {
+          toast.message = res.error.message;
+          toast.present();
+        }
+      });
     }
   }
 
