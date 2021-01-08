@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { ActionSheetController } from '@ionic/angular';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { ActionSheetController, IonRouterOutlet } from '@ionic/angular';
 import { Category } from '../category';
 import { CategoryService } from '../category.service';
 
@@ -21,6 +21,7 @@ export class CategoryListPage implements OnInit {
   constructor(
     private location: Location,
     private router: Router,
+    private outlet: IonRouterOutlet,
     private categoryService: CategoryService,
     private actionSheetController: ActionSheetController
   ) {
@@ -56,7 +57,8 @@ export class CategoryListPage implements OnInit {
   onSelectedSubCategory(category: Category) {
     // this.activateSubCategory = category;
     this.categoryService.setActiveCategory(category);
-    this.location.back();
+    // this.location.back();
+    this.outlet.pop(1);
   }
 
   async onPresentActionSheet() {
