@@ -1,9 +1,31 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>product-log</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回"></ion-back-button>
+    </ion-buttons>
+    <ion-title>出入库记录</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content color="light">
+  <ion-card *ngFor="let log of stockLogs">
+    <ion-list>
+      <ion-item>
+        <ion-label>{{ log.type }}数量：</ion-label>
+        <ion-note slot="end">{{ log.change }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>当前库存：</ion-label>
+        <ion-note slot="end">{{ log.sum }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>操作时间：</ion-label>
+        <ion-note slot="end">{{ log.time | date: "yyyy-MM-dd HH:mm:ss" }}</ion-note>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>备注:</ion-label>
+        <ion-note slot="end">{{ log.remark }}</ion-note>
+      </ion-item>
+    </ion-list>
+  </ion-card>
 </ion-content>

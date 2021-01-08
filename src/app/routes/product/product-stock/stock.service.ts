@@ -18,9 +18,9 @@ export class StockService {
     this.localStorageService.set(STOCKLOG_KEY, stockLogs);
   }
 
-  getStorageLogByBarcode(barcode: string): StockLog[] {
+  getStockLogsByBarcode(barcode: string): StockLog[] {
     let stockLogs: StockLog[] = this.localStorageService.get(STOCKLOG_KEY, []);
-    stockLogs = stockLogs.filter((item) => item.productBarcode !== barcode);
+    stockLogs = stockLogs.filter((item) => item.productBarcode === barcode);
     return stockLogs;
   }
 

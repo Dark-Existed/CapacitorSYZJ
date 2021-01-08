@@ -7,7 +7,7 @@ export const CURRENT_USER_KEY = 'CurrentUser';
 export const HISTORY_USER = 'HistoryUser';
 export const CATEGORY_KEY = 'Category';
 export const PRODUCT_KEY = 'Products';
-export const STOCKLOG_KEY = 'StockLog';
+export const STOCKLOG_KEY = 'StockLogs';
 
 @Injectable({
   providedIn: 'root'
